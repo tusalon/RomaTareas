@@ -1,0 +1,31 @@
+name: Avisos de tareas
+
+on:
+  schedule:
+    # Cada hora en punto. GitHub no garantiza puntualidad: puede retrasarse
+    # entre 5 y 15 minutos, y desactiva el cron si el repo pasa 60 dias sin
+    # actividad. Para recordatorios de tareas ambas cosas son tolerables.
+    - cron: '0 * * * *'
+  workflow_dispatch:
+
+# Si un aviso tarda mas que el intervalo, no se pisan dos ejecuciones.
+concurrency:
+  group: avisos
+  cancel-in-progress: false
+
+jobs:
+  avisar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Enviar avisos
+        env:
+          NTFY_TOPIC: ${{ vars.NTFY_TOPIC || 'roma-tareas' }}
+          ROMATAREAS_URL: ${{ vars.ROMATAREAS_URL || 'https://tusalon.github.io/RomaTareas/' }}
+        run: node scripts/avisar.js

@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>RomaTareas</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><text y='14' font-size='14'>✅</text></svg>">
+<style>
+  :root {
+    --bg: #FFFAF5;
+    --card: #FFFDFA;
+    --text: #261D29;
+    --text-muted: #746671;
+    --border: #E5D7CD;
+    --primary: #681831;
+    --primary-hover: #8B2447;
+    --coral: #FF675C;
+    --vencida: #A83C37;
+    --vencida-bg: #FDECEB;
+    --hecho: #1F8654;
+    --shadow: 0 1px 2px rgba(76,34,50,.05), 0 8px 24px rgba(76,34,50,.05);
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font-family: -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.5; padding: 0 0 96px;
+  }
+  .wrap { max-width: 640px; margin: 0 auto; padding: 20px 16px; }
+
+  header { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 20px; }
+  h1 { font-family: Georgia, 'Times New Roman', serif; font-size: 28px; margin: 0; letter-spacing: -.02em; }
+  .salir { background: none; border: 0; color: var(--text-muted); font-size: 13px; cursor: pointer; padding: 4px; }
+
+  .grupo { margin-bottom: 26px; }
+  .grupo h2 {
+    font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--text-muted); margin: 0 0 10px;
+  }
+  .grupo.vencidas h2 { color: var(--vencida); }
+
+  .tarea {
+    background: var(--card); border: 1px solid var(--border); border-radius: 14px;
+    padding: 14px; margin-bottom: 10px; display: flex; gap: 12px; align-items: flex-start;
+    box-shadow: var(--shadow);
+  }
+  .vencidas .tarea { border-color: var(--vencida); background: var(--vencida-bg); }
+
+  .check {
+    flex: 0 0 auto; width: 30px; height: 30px; border-radius: 50%;
+    border: 2px solid var(--primary); background: transparent; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; color: transparent; transition: all .15s; padding: 0;
+  }
+  .check:hover, .check:focus-visible { background: var(--primary); color: #fff; }
+
+  .cuerpo { flex: 1 1 auto; min-width: 0; }
+  .titulo { font-weight: 600; font-size: 15px; word-wrap: break-word; }
+  .detalle { font-size: 13px; color: var(--text-muted); margin-top: 3px; white-space: pre-wrap; }
+  .meta { font-size: 12px; color: var(--text-muted); margin-top: 6px; display: flex; gap: 10px; flex-wrap: wrap; }
+  .vencidas .meta { color: var(--vencida); font-weight: 600; }
+  .repite { color: var(--primary); }
+
+  .vacio { color: var(--text-muted); font-size: 14px; text-align: center; padding: 36px 12px; }
+
+  /* --- contenido de la pieza dentro de la tarea --- */
+  .ver-contenido {
+    background: none; border: 0; color: var(--primary); font: inherit; font-size: 13px;
+    font-weight: 600; cursor: pointer; padding: 6px 0 0; text-align: left;
+  }
+  .contenido { display: none; margin-top: 10px; }
+  .contenido.abierto { display: block; }
+  .contenido pre {
+    margin: 0; padding: 12px; background: #fff; border: 1px solid var(--border);
+    border-radius: 10px; font-family: ui-monospace, 'Cascadia Mono', Consolas, monospace;
+    font-size: 12.5px; line-height: 1.55; white-space: pre-wrap; word-wrap: break-word;
+    max-height: 55vh; overflow-y: auto;
+  }
+  .copiar {
+    margin-top: 8px; font: inherit; font-size: 13px; font-weight: 600; padding: 8px 14px;
+    border: 1px solid var(--primary); border-radius: 9px; background: #fff;
+    color: var(--primary); cursor: pointer;
+  }
+  .copiar:hover { background: var(--primary); color: #fff; }
+  .copiar.hecho { border-color: var(--hecho); color: var(--hecho); background: #fff; }
+
+  /* --- importar la semana --- */
+  .importar { margin: 26px 0 8px; }
+  .importar summary {
+    cursor: pointer; font-size: 13px; font-weight: 600; color: var(--primary);
+    list-style: none; padding: 6px 0;
+  }
+  .importar summary::-webkit-details-marker { display: none; }
+  .importar summary::before { content: '+ '; }
+  .importar[open] summary::before { content: '− '; }
+  .importar textarea {
+    font-family: ui-monospace, Consolas, monospace; font-size: 12px; min-height: 110px; margin-top: 8px;
+  }
+  .importar .aviso { font-size: 13px; margin-top: 8px; min-height: 18px; }
+  .importar .aviso.ok { color: var(--hecho); }
+  .importar .aviso.mal { color: var(--vencida); }
+
+  /* --- formulario --- */
+  .nueva {
+    position: fixed; left: 0; right: 0; bottom: 0; background: var(--card);
+    border-top: 1px solid var(--border); padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
+    box-shadow: 0 -8px 24px rgba(76,34,50,.06);
+  }
+  .nueva-inner { max-width: 640px; margin: 0 auto; display: flex; flex-direction: column; gap: 8px; }
+  .fila { display: flex; gap: 8px; }
+  input, select, textarea {
+    font: inherit; font-size: 15px; padding: 11px 12px; border: 1px solid var(--border);
+    border-radius: 10px; background: #fff; color: var(--text); width: 100%; min-width: 0;
+  }
+  textarea { resize: vertical; min-height: 44px; }
+  input:focus, select:focus, textarea:focus { outline: 2px solid var(--coral); outline-offset: 1px; }
+  button.principal {
+    font: inherit; font-weight: 600; font-size: 15px; padding: 11px 18px; border: 0;
+    border-radius: 10px; background: var(--primary); color: #fff; cursor: pointer; white-space: nowrap;
+  }
+  button.principal:hover { background: var(--primary-hover); }
+  button.principal:disabled { opacity: .5; cursor: default; }
+  .desplegar { background: none; border: 0; color: var(--primary); font: inherit; font-size: 13px; cursor: pointer; padding: 2px; text-align: left; }
+  .extra { display: none; flex-direction: column; gap: 8px; }
+  .extra.abierto { display: flex; }
+
+  /* --- pantalla de PIN --- */
+  .pin-pantalla { max-width: 340px; margin: 18vh auto 0; padding: 0 20px; text-align: center; }
+  .pin-pantalla h1 { font-size: 32px; margin-bottom: 8px; }
+  .pin-pantalla p { color: var(--text-muted); font-size: 14px; margin: 0 0 22px; }
+  .pin-pantalla input { text-align: center; font-size: 22px; letter-spacing: .3em; margin-bottom: 10px; }
+  .error { color: var(--vencida); font-size: 13px; min-height: 18px; }
+  [hidden] { display: none !important; }
+</style>
+</head>
+<body>
+
+<div id="pantalla-pin" class="pin-pantalla">
+  <h1>RomaTareas</h1>
+  <p>Escribe tu PIN. Queda guardado en este dispositivo.</p>
+  <input id="pin" type="password" inputmode="numeric" autocomplete="current-password" placeholder="••••" aria-label="PIN">
+  <button class="principal" id="entrar" style="width:100%">Entrar</button>
+  <p class="error" id="pin-error" role="alert"></p>
+</div>
+
+<div id="pantalla-app" hidden>
+  <div class="wrap">
+    <header>
+      <h1>Tareas</h1>
+      <button class="salir" id="salir">Salir</button>
+    </header>
+    <div id="lista"><p class="vacio">Cargando…</p></div>
+  </div>
+
+  <div class="wrap" style="padding-top:0">
+    <details class="importar" id="importar">
+      <summary>Importar la semana</summary>
+      <textarea id="imp-texto" placeholder='Pega aquí el bloque que te doy cada domingo' aria-label="Contenido a importar"></textarea>
+      <button class="principal" type="button" id="imp-boton" style="margin-top:8px">Importar</button>
+      <p class="aviso" id="imp-aviso" role="status"></p>
+    </details>
+  </div>
+
+  <form class="nueva" id="form-nueva">
+    <div class="nueva-inner">
+      <div class="fila">
+        <input id="t-titulo" placeholder="Nueva tarea" required aria-label="Título">
+        <button class="principal" type="submit">Añadir</button>
+      </div>
+      <button class="desplegar" type="button" id="mas">+ plazo, detalle y repetición</button>
+      <div class="extra" id="extra">
+        <textarea id="t-detalle" placeholder="Detalle (opcional)" aria-label="Detalle"></textarea>
+        <div class="fila">
+          <input id="t-vence" type="datetime-local" aria-label="Plazo">
+          <select id="t-repite" aria-label="Repetición">
+            <option value="">No se repite</option>
+            <option value="diaria">Cada día</option>
+            <option value="semanal:1">Cada lunes</option>
+            <option value="semanal:2">Cada martes</option>
+            <option value="semanal:3">Cada miércoles</option>
+            <option value="semanal:4">Cada jueves</option>
+            <option value="semanal:5">Cada viernes</option>
+            <option value="semanal:6">Cada sábado</option>
+            <option value="semanal:0">Cada domingo</option>
+            <option value="mensual">Cada mes</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+<script src="utils/config.js"></script>
+<script>
+(function () {
+  'use strict';
+
+  var API = window.SUPABASE_URL + '/rest/v1/tareas';
+  var KEY = window.SUPABASE_ANON_KEY;
+  var pinHash = localStorage.getItem('romatareas-pin');
+
+  function cabeceras(extra) {
+    var h = { apikey: KEY, Authorization: 'Bearer ' + KEY, 'Content-Type': 'application/json' };
+    for (var k in extra) h[k] = extra[k];
+    return h;
+  }
+
+  async function hash(texto) {
+    var buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(texto));
+    return Array.from(new Uint8Array(buf)).map(function (b) {
+      return b.toString(16).padStart(2, '0');
+    }).join('');
+  }
+
+  // --- fechas -------------------------------------------------------------
+  // Todo se compara contra el inicio del dia local, no contra la hora exacta:
+  // una tarea que vence hoy a las 9am no debe verse como "vencida" a las 10.
+  function inicioDelDia(d) {
+    var x = new Date(d);
+    x.setHours(0, 0, 0, 0);
+    return x;
+  }
+
+  function proximaFecha(desde, recurrencia) {
+    var d = new Date(desde);
+    if (recurrencia === 'diaria') {
+      d.setDate(d.getDate() + 1);
+      return d;
+    }
+    if (recurrencia === 'mensual') {
+      d.setMonth(d.getMonth() + 1);
+      return d;
+    }
+    var m = /^semanal:([0-6])$/.exec(recurrencia || '');
+    if (m) {
+      var objetivo = Number(m[1]);
+      // Siempre avanza al menos un dia, si no una tarea semanal completada
+      // el mismo dia se reprogramaria para hoy otra vez.
+      d.setDate(d.getDate() + 1);
+      while (d.getDay() !== objetivo) d.setDate(d.getDate() + 1);
+      return d;
+    }
+    return null;
+  }
+
+  function textoPlazo(iso) {
+    if (!iso) return '';
+    var d = new Date(iso);
+    var hoy = inicioDelDia(new Date());
+    var dias = Math.round((inicioDelDia(d) - hoy) / 86400000);
+    var hora = d.getHours() || d.getMinutes()
+      ? ' · ' + String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0')
+      : '';
+    if (dias === 0) return 'Hoy' + hora;
+    if (dias === 1) return 'Mañana' + hora;
+    if (dias === -1) return 'Ayer' + hora;
+    if (dias < 0) return 'Hace ' + Math.abs(dias) + ' días';
+    if (dias < 7) return 'En ' + dias + ' días' + hora;
+    return d.toLocaleDateString('es-ES', { day: 'numeric', month: 'short' }) + hora;
+  }
+
+  var NOMBRE_REPITE = {
+    diaria: 'cada día', mensual: 'cada mes',
+    'semanal:0': 'cada domingo', 'semanal:1': 'cada lunes', 'semanal:2': 'cada martes',
+    'semanal:3': 'cada miércoles', 'semanal:4': 'cada jueves', 'semanal:5': 'cada viernes',
+    'semanal:6': 'cada sábado'
+  };
+
+  // --- datos --------------------------------------------------------------
+  async function traerTareas() {
+    var url = API + '?select=*&pin_hash=eq.' + pinHash +
+              '&completada_en=is.null&order=vence_en.asc.nullslast,creada_en.asc';
+    var r = await fetch(url, { headers: cabeceras() });
+    if (!r.ok) throw new Error('No se pudo cargar: ' + r.status);
+    return r.json();
+  }
+
+  async function crear(filas) {
+    var r = await fetch(API, {
+      method: 'POST',
+      headers: cabeceras({ Prefer: 'return=minimal' }),
+      body: JSON.stringify(filas)
+    });
+    if (!r.ok) throw new Error('No se pudo guardar: ' + (await r.text()));
+  }
+
+  async function completar(tarea) {
+    var r = await fetch(API + '?id=eq.' + tarea.id, {
+      method: 'PATCH',
+      headers: cabeceras({ Prefer: 'return=minimal' }),
+      body: JSON.stringify({ completada_en: new Date().toISOString() })
+    });
+    if (!r.ok) throw new Error('No se pudo completar');
+
+    // Una tarea recurrente completada engendra la siguiente. Se calcula desde
+    // su propio plazo, no desde hoy, para que no se corra el dia cada semana.
+    if (tarea.recurrencia) {
+      var base = tarea.vence_en ? new Date(tarea.vence_en) : new Date();
+      var proxima = proximaFecha(base, tarea.recurrencia);
+      if (proxima) {
+        await crear([{
+          pin_hash: pinHash,
+          titulo: tarea.titulo,
+          detalle: tarea.detalle,
+          vence_en: proxima.toISOString(),
+          recurrencia: tarea.recurrencia
+        }]);
+      }
+    }
+  }
+
+  // --- semillas -----------------------------------------------------------
+  function proximoDia(diaSemana, hora) {
+    var d = new Date();
+    d.setHours(hora, 0, 0, 0);
+    if (d.getDay() === diaSemana && d > new Date()) return d;
+    do { d.setDate(d.getDate() + 1); } while (d.getDay() !== diaSemana);
+    return d;
+  }
+
+  function semillas() {
+    var hoy9 = new Date(); hoy9.setHours(9, 0, 0, 0);
+    if (hoy9 < new Date()) hoy9.setDate(hoy9.getDate() + 1);
+    var finDeMes = new Date(); finDeMes.setMonth(finDeMes.getMonth() + 1, 1); finDeMes.setHours(10, 0, 0, 0);
+
+    return [
+      ['Tanda de historias de la semana', 'Pre-armar 18 historias: 6 de valor, 6 CTA, 6 ganchos.', proximoDia(0, 10), 'semanal:0'],
+      ['Correr radar.py precios y nuevos', 'Datos frescos para el Radar y para Nuevos en el Hub.', proximoDia(0, 9), 'semanal:0'],
+      ['Grabar los 2 reels de La Escuela', 'Lunes y miércoles, en una sola sesión.', proximoDia(0, 11), 'semanal:0'],
+      ['Grabar reels del viernes y sábado', 'Ranking y Prueba Real — dependen de los datos de la semana.', proximoDia(4, 10), 'semanal:4'],
+      ['Responder comentarios del día', 'En menos de 1 hora vale el doble. Pasadas 24h, vale cero.', hoy9, 'diaria'],
+      ['Publicar la pieza del día', 'Mira el calendario en PLAN.md.', hoy9, 'diaria'],
+      ['Revisar las 4 métricas', 'Guardados, compartidos, comentarios con palabra clave y perfiles nuevos en RomaHub.', proximoDia(5, 18), 'semanal:5'],
+      ['Podar la sección con menos guardados', 'Cambiarla o eliminarla. Sin cariño.', finDeMes, 'mensual']
+    ].map(function (t) {
+      return { pin_hash: pinHash, titulo: t[0], detalle: t[1], vence_en: t[2].toISOString(), recurrencia: t[3] };
+    });
+  }
+
+  // --- pintar -------------------------------------------------------------
+  var lista = document.getElementById('lista');
+
+  function agrupar(tareas) {
+    var hoy = inicioDelDia(new Date());
+    var finSemana = new Date(hoy); finSemana.setDate(finSemana.getDate() + 7);
+    var g = { vencidas: [], hoy: [], semana: [], despues: [], sinPlazo: [] };
+    tareas.forEach(function (t) {
+      if (!t.vence_en) return g.sinPlazo.push(t);
+      var d = inicioDelDia(new Date(t.vence_en));
+      if (d < hoy) g.vencidas.push(t);
+      else if (d.getTime() === hoy.getTime()) g.hoy.push(t);
+      else if (d < finSemana) g.semana.push(t);
+      else g.despues.push(t);
+    });
+    return g;
+  }
+
+  function nodoTarea(t) {
+    var li = document.createElement('div');
+    li.className = 'tarea';
+
+    var btn = document.createElement('button');
+    btn.className = 'check';
+    btn.type = 'button';
+    btn.textContent = '✓';
+    btn.setAttribute('aria-label', 'Completar: ' + t.titulo);
+    btn.addEventListener('click', async function () {
+      btn.disabled = true;
+      try { await completar(t); await pintar(); }
+      catch (e) { btn.disabled = false; alert(e.message); }
+    });
+
+    var cuerpo = document.createElement('div');
+    cuerpo.className = 'cuerpo';
+
+    var titulo = document.createElement('div');
+    titulo.className = 'titulo';
+    titulo.textContent = t.titulo;
+    cuerpo.appendChild(titulo);
+
+    // El contenido corto se lee de un vistazo; el largo (un guion de reel,
+    // un carrusel entero) se pliega, o la lista se vuelve ilegible.
+    if (t.detalle) {
+      var LARGO = 160;
+      if (t.detalle.length <= LARGO) {
+        var det = document.createElement('div');
+        det.className = 'detalle';
+        det.textContent = t.detalle;
+        cuerpo.appendChild(det);
+      } else {
+        var toggle = document.createElement('button');
+        toggle.className = 'ver-contenido';
+        toggle.type = 'button';
+        toggle.textContent = 'Ver contenido ▾';
+
+        var caja = document.createElement('div');
+        caja.className = 'contenido';
+        var pre = document.createElement('pre');
+        pre.textContent = t.detalle;
+        caja.appendChild(pre);
+
+        // Sin este boton el contenido no sirve: hay que poder pegarlo en
+        // CapCut o en Instagram sin seleccionar a mano en el movil.
+        var copiar = document.createElement('button');
+        copiar.className = 'copiar';
+        copiar.type = 'button';
+        copiar.textContent = 'Copiar';
+        copiar.addEventListener('click', function () {
+          navigator.clipboard.writeText(t.detalle).then(function () {
+            copiar.textContent = 'Copiado ✓';
+            copiar.classList.add('hecho');
+            setTimeout(function () {
+              copiar.textContent = 'Copiar';
+              copiar.classList.remove('hecho');
+            }, 1800);
+          }, function () {
+            copiar.textContent = 'No se pudo copiar';
+          });
+        });
+        caja.appendChild(copiar);
+
+        toggle.addEventListener('click', function () {
+          var abierto = caja.classList.toggle('abierto');
+          toggle.textContent = abierto ? 'Ocultar contenido ▴' : 'Ver contenido ▾';
+        });
+
+        cuerpo.appendChild(toggle);
+        cuerpo.appendChild(caja);
+      }
+    }
+
+    var meta = document.createElement('div');
+    meta.className = 'meta';
+    if (t.vence_en) {
+      var plazo = document.createElement('span');
+      plazo.textContent = textoPlazo(t.vence_en);
+      meta.appendChild(plazo);
+    }
+    if (t.recurrencia) {
+      var rep = document.createElement('span');
+      rep.className = 'repite';
+      rep.textContent = '↻ ' + (NOMBRE_REPITE[t.recurrencia] || t.recurrencia);
+      meta.appendChild(rep);
+    }
+    if (meta.children.length) cuerpo.appendChild(meta);
+
+    li.appendChild(btn);
+    li.appendChild(cuerpo);
+    return li;
+  }
+
+  function bloque(clase, titulo, tareas) {
+    if (!tareas.length) return null;
+    var sec = document.createElement('section');
+    sec.className = 'grupo ' + clase;
+    var h = document.createElement('h2');
+    h.textContent = titulo + ' · ' + tareas.length;
+    sec.appendChild(h);
+    tareas.forEach(function (t) { sec.appendChild(nodoTarea(t)); });
+    return sec;
+  }
+
+  async function pintar() {
+    var tareas;
+    try { tareas = await traerTareas(); }
+    catch (e) { lista.innerHTML = ''; lista.appendChild(Object.assign(document.createElement('p'), { className: 'vacio', textContent: e.message })); return; }
+
+    lista.innerHTML = '';
+    if (!tareas.length) {
+      lista.appendChild(Object.assign(document.createElement('p'), {
+        className: 'vacio', textContent: 'Nada pendiente. Disfrútalo.'
+      }));
+      return;
+    }
+    var g = agrupar(tareas);
+    [
+      bloque('vencidas', 'Vencidas', g.vencidas),
+      bloque('', 'Hoy', g.hoy),
+      bloque('', 'Esta semana', g.semana),
+      bloque('', 'Más adelante', g.despues),
+      bloque('', 'Sin plazo', g.sinPlazo)
+    ].forEach(function (b) { if (b) lista.appendChild(b); });
+  }
+
+  // --- arranque -----------------------------------------------------------
+  var pantallaPin = document.getElementById('pantalla-pin');
+  var pantallaApp = document.getElementById('pantalla-app');
+
+  async function entrar() {
+    pantallaPin.hidden = true;
+    pantallaApp.hidden = false;
+    await pintar();
+  }
+
+  // Entrar es la unica accion que INSERTA al pulsarla. Sin bloquear el boton,
+  // pulsar dos veces (o dar Enter y ademas clic) lanza dos comprobaciones que
+  // ven la lista vacia a la vez y siembran las tareas por duplicado.
+  var entrando = false;
+  document.getElementById('entrar').addEventListener('click', async function () {
+    if (entrando) return;
+    var boton = this;
+    var valor = document.getElementById('pin').value.trim();
+    var err = document.getElementById('pin-error');
+    if (valor.length < 4) { err.textContent = 'Usa al menos 4 caracteres.'; return; }
+
+    entrando = true;
+    boton.disabled = true;
+    err.textContent = '';
+    pinHash = await hash(valor);
+    localStorage.setItem('romatareas-pin', pinHash);
+
+    // Primera vez con este PIN: cargar las tareas del plan de contenido.
+    // Se mira TODA la tabla de ese pin, no solo lo pendiente: si ya completaste
+    // las semillas, no deben volver a aparecer.
+    try {
+      var yaHubo = await fetch(API + '?select=id&pin_hash=eq.' + pinHash + '&limit=1', { headers: cabeceras() })
+        .then(function (r) { return r.json(); });
+      if (!yaHubo.length) await crear(semillas());
+    } catch (e) { /* si falla la semilla, la app sigue siendo usable */ }
+
+    entrando = false;
+    boton.disabled = false;
+    entrar();
+  });
+
+  document.getElementById('pin').addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') document.getElementById('entrar').click();
+  });
+
+  document.getElementById('salir').addEventListener('click', function () {
+    localStorage.removeItem('romatareas-pin');
+    location.reload();
+  });
+
+  document.getElementById('mas').addEventListener('click', function () {
+    document.getElementById('extra').classList.toggle('abierto');
+  });
+
+  document.getElementById('form-nueva').addEventListener('submit', async function (e) {
+    e.preventDefault();
+    var titulo = document.getElementById('t-titulo');
+    var detalle = document.getElementById('t-detalle');
+    var vence = document.getElementById('t-vence');
+    var repite = document.getElementById('t-repite');
+    if (!titulo.value.trim()) return;
+
+    var fila = {
+      pin_hash: pinHash,
+      titulo: titulo.value.trim(),
+      detalle: detalle.value.trim() || null,
+      vence_en: vence.value ? new Date(vence.value).toISOString() : null,
+      recurrencia: repite.value || null
+    };
+    try {
+      await crear([fila]);
+      titulo.value = ''; detalle.value = ''; vence.value = ''; repite.value = '';
+      document.getElementById('extra').classList.remove('abierto');
+      await pintar();
+    } catch (err) { alert(err.message); }
+  });
+
+  // --- importar la semana -------------------------------------------------
+  document.getElementById('imp-boton').addEventListener('click', async function () {
+    var texto = document.getElementById('imp-texto');
+    var aviso = document.getElementById('imp-aviso');
+    var boton = this;
+
+    function decir(msg, clase) {
+      aviso.textContent = msg;
+      aviso.className = 'aviso ' + (clase || '');
+    }
+
+    var crudo = texto.value.trim();
+    if (!crudo) return decir('Pega primero el bloque.', 'mal');
+
+    var datos;
+    try {
+      datos = JSON.parse(crudo);
+    } catch (e) {
+      return decir('Eso no es un bloque válido. Cópialo entero, desde el primer [ hasta el último ].', 'mal');
+    }
+    if (!Array.isArray(datos) || !datos.length) {
+      return decir('El bloque debe ser una lista de tareas.', 'mal');
+    }
+    var invalida = datos.find(function (t) { return !t || typeof t.titulo !== 'string' || !t.titulo.trim(); });
+    if (invalida) return decir('Hay una tarea sin título. Revisa el bloque.', 'mal');
+
+    boton.disabled = true;
+    decir('Importando…');
+    try {
+      // Dedupe por titulo + dia: si pegas el mismo bloque dos veces no acabas
+      // con la semana duplicada, que es el error facil de cometer un domingo.
+      var existentes = await traerTareas();
+      var yaHay = new Set(existentes.map(function (t) {
+        return t.titulo + '|' + (t.vence_en ? t.vence_en.slice(0, 10) : '');
+      }));
+
+      var nuevas = datos.filter(function (t) {
+        var dia = t.vence_en ? new Date(t.vence_en).toISOString().slice(0, 10) : '';
+        return !yaHay.has(t.titulo + '|' + dia);
+      }).map(function (t) {
+        return {
+          pin_hash: pinHash,
+          titulo: t.titulo.trim(),
+          detalle: t.detalle || null,
+          vence_en: t.vence_en ? new Date(t.vence_en).toISOString() : null,
+          recurrencia: t.recurrencia || null
+        };
+      });
+
+      var repetidas = datos.length - nuevas.length;
+      if (!nuevas.length) {
+        decir('Ya estaban todas. No se duplicó nada.', 'ok');
+      } else {
+        await crear(nuevas);
+        decir('Listo: ' + nuevas.length + ' tarea(s)' +
+              (repetidas ? ' · ' + repetidas + ' ya estaban' : ''), 'ok');
+        texto.value = '';
+        await pintar();
+      }
+    } catch (e) {
+      decir(e.message, 'mal');
+    } finally {
+      boton.disabled = false;
+    }
+  });
+
+  if (pinHash) entrar();
+})();
+</script>
+</body>
+</html>
