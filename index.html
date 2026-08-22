@@ -156,7 +156,10 @@
     <details class="importar" id="importar">
       <summary>Importar la semana</summary>
       <textarea id="imp-texto" placeholder='Pega aquí el bloque que te doy cada domingo' aria-label="Contenido a importar"></textarea>
-      <button class="principal" type="button" id="imp-boton" style="margin-top:8px">Importar</button>
+      <div class="fila" style="margin-top:8px">
+        <button class="principal" type="button" id="imp-cargar" style="background:#fff;color:var(--primary);border:1px solid var(--primary)">Cargar semana publicada</button>
+        <button class="principal" type="button" id="imp-boton">Importar</button>
+      </div>
       <p class="aviso" id="imp-aviso" role="status"></p>
     </details>
   </div>
@@ -560,6 +563,29 @@
   });
 
   // --- importar la semana -------------------------------------------------
+  // Trae el bloque de la semana que ya vive en el repo, para no tener que
+  // copiar 14.000 caracteres a mano en el movil.
+  document.getElementById('imp-cargar').addEventListener('click', async function () {
+    var aviso = document.getElementById('imp-aviso');
+    var boton = this;
+    boton.disabled = true;
+    aviso.className = 'aviso';
+    aviso.textContent = 'Buscando…';
+    try {
+      var r = await fetch('semana.json?v=' + Date.now());
+      if (!r.ok) throw new Error('No hay semana publicada todavía (' + r.status + ')');
+      var datos = await r.json();
+      document.getElementById('imp-texto').value = JSON.stringify(datos, null, 1);
+      aviso.className = 'aviso ok';
+      aviso.textContent = datos.length + ' pieza(s) cargadas. Dale a Importar.';
+    } catch (e) {
+      aviso.className = 'aviso mal';
+      aviso.textContent = e.message;
+    } finally {
+      boton.disabled = false;
+    }
+  });
+
   document.getElementById('imp-boton').addEventListener('click', async function () {
     var texto = document.getElementById('imp-texto');
     var aviso = document.getElementById('imp-aviso');
