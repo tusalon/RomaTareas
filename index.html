@@ -63,6 +63,18 @@
 
   .vacio { color: var(--text-muted); font-size: 14px; text-align: center; padding: 36px 12px; }
 
+  /* --- hechas hoy: confirman que el toque funciono, y dejan deshacerlo --- */
+  .hechas .tarea { opacity: .62; border-style: dashed; }
+  .hechas .titulo { text-decoration: line-through; }
+  .hechas .check {
+    border-color: var(--hecho); background: var(--hecho); color: #fff; cursor: default;
+  }
+  .deshacer {
+    background: none; border: 0; color: var(--text-muted); font: inherit; font-size: 12px;
+    cursor: pointer; padding: 4px 0 0; text-decoration: underline;
+  }
+  .deshacer:hover { color: var(--primary); }
+
   /* --- contenido de la pieza dentro de la tarea --- */
   .ver-contenido {
     background: none; border: 0; color: var(--primary); font: inherit; font-size: 13px;
@@ -278,6 +290,26 @@
     return r.json();
   }
 
+  // Las completadas de hoy se muestran aparte. Sin esto, marcar una tarea la
+  // hace desaparecer sin rastro y parece que se borro.
+  async function traerHechasHoy() {
+    var hoy = inicioDelDia(new Date()).toISOString();
+    var url = API + '?select=*&pin_hash=eq.' + pinHash +
+              '&completada_en=gte.' + hoy + '&order=completada_en.desc';
+    var r = await fetch(url, { headers: cabeceras() });
+    if (!r.ok) return [];
+    return r.json();
+  }
+
+  async function descompletar(tarea) {
+    var r = await fetch(API + '?id=eq.' + tarea.id, {
+      method: 'PATCH',
+      headers: cabeceras({ Prefer: 'return=minimal' }),
+      body: JSON.stringify({ completada_en: null })
+    });
+    if (!r.ok) throw new Error('No se pudo deshacer');
+  }
+
   async function crear(filas) {
     var r = await fetch(API, {
       method: 'POST',
@@ -452,37 +484,95 @@
     return li;
   }
 
-  function bloque(clase, titulo, tareas) {
+  function nodoHecha(t) {
+    var li = document.createElement('div');
+    li.className = 'tarea';
+
+    var marca = document.createElement('div');
+    marca.className = 'check';
+    marca.textContent = '✓';
+    marca.setAttribute('aria-label', 'Completada');
+
+    var cuerpo = document.createElement('div');
+    cuerpo.className = 'cuerpo';
+
+    var titulo = document.createElement('div');
+    titulo.className = 'titulo';
+    titulo.textContent = t.titulo;
+    cuerpo.appendChild(titulo);
+
+    // Deshacer solo para las que no se repiten. En una recurrente, completarla
+    // ya creo la siguiente: devolverla a pendiente dejaria dos vivas a la vez.
+    if (!t.recurrencia) {
+      var undo = document.createElement('button');
+      undo.className = 'deshacer';
+      undo.type = 'button';
+      undo.textContent = 'Deshacer';
+      undo.addEventListener('click', async function () {
+        undo.disabled = true;
+        try { await descompletar(t); await pintar(); }
+        catch (e) { undo.disabled = false; alert(e.message); }
+      });
+      cuerpo.appendChild(undo);
+    } else {
+      var nota = document.createElement('div');
+      nota.className = 'meta';
+      nota.textContent = '↻ la siguiente ya está en la lista';
+      cuerpo.appendChild(nota);
+    }
+
+    li.appendChild(marca);
+    li.appendChild(cuerpo);
+    return li;
+  }
+
+  function bloque(clase, titulo, tareas, hacerNodo) {
     if (!tareas.length) return null;
     var sec = document.createElement('section');
     sec.className = 'grupo ' + clase;
     var h = document.createElement('h2');
     h.textContent = titulo + ' · ' + tareas.length;
     sec.appendChild(h);
-    tareas.forEach(function (t) { sec.appendChild(nodoTarea(t)); });
+    var fabrica = hacerNodo || nodoTarea;
+    tareas.forEach(function (t) { sec.appendChild(fabrica(t)); });
     return sec;
   }
 
   async function pintar() {
-    var tareas;
-    try { tareas = await traerTareas(); }
-    catch (e) { lista.innerHTML = ''; lista.appendChild(Object.assign(document.createElement('p'), { className: 'vacio', textContent: e.message })); return; }
+    var tareas, hechas;
+    try {
+      tareas = await traerTareas();
+      hechas = await traerHechasHoy();
+    } catch (e) {
+      lista.innerHTML = '';
+      lista.appendChild(Object.assign(document.createElement('p'), { className: 'vacio', textContent: e.message }));
+      return;
+    }
 
     lista.innerHTML = '';
-    if (!tareas.length) {
+    if (!tareas.length && !hechas.length) {
       lista.appendChild(Object.assign(document.createElement('p'), {
         className: 'vacio', textContent: 'Nada pendiente. Disfrútalo.'
       }));
       return;
     }
+
     var g = agrupar(tareas);
     [
       bloque('vencidas', 'Vencidas', g.vencidas),
       bloque('', 'Hoy', g.hoy),
       bloque('', 'Esta semana', g.semana),
       bloque('', 'Más adelante', g.despues),
-      bloque('', 'Sin plazo', g.sinPlazo)
+      bloque('', 'Sin plazo', g.sinPlazo),
+      bloque('hechas', 'Hechas hoy', hechas, nodoHecha)
     ].forEach(function (b) { if (b) lista.appendChild(b); });
+
+    if (!tareas.length) {
+      var p = Object.assign(document.createElement('p'), {
+        className: 'vacio', textContent: 'No queda nada pendiente. Buen día de trabajo.'
+      });
+      lista.insertBefore(p, lista.firstChild);
+    }
   }
 
   // --- arranque -----------------------------------------------------------
