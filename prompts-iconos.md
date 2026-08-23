@@ -1,173 +1,199 @@
 # Prompts de iconos 3D — Nano Banana
 
-Los iconos que acompañan a los reels. **15 en total**, reutilizables semana tras semana.
+**Cada prompt de abajo está completo.** Se copia entero, se pega y se genera. No hay que
+añadirle nada ni juntarlo con otro bloque.
+
+Sí, el texto de estilo se repite en los 17. Es a propósito: repetirlo en el archivo no
+cuesta nada, y ensamblarlo a mano cada vez es donde se cuela el error que rompe la unidad
+del pack.
+
+Los prompts van en inglés porque el modelo respeta mejor el estilo. Los títulos en español
+para que sepas cuál es cuál.
+
+**Genera en 1:1.** En CapCut usas *Quitar fondo → Recorte automático*.
 
 ---
 
-## Cómo usarlos
-
-**El bloque de estilo va idéntico en los 15.** Es lo único que hace que parezcan del mismo pack. Si lo reescribes o lo resumes en alguno, ese icono va a desentonar y se nota en pantalla.
-
-La fórmula es siempre:
+## 1 · Interrogación
+*Lunes · el gancho del descuentico*
 
 ```
-[EL SUJETO] + [BLOQUE DE ESTILO, sin tocar]
-```
-
-Los prompts van en inglés a propósito: el modelo respeta mejor el estilo. Los títulos están en español para que sepas cuál es cuál.
-
-**Genera en 1:1.** En CapCut lo escalas y lo colocas junto al texto.
-
-**El fondo:** los prompts piden fondo blanco liso. En CapCut usas *Quitar fondo → Recorte automático* y queda limpio sobre la rejilla. Si tu versión de CapCut no lo hace bien, cambia `plain white background` por `solid chroma green background` y usa croma.
-
----
-
-## EL BLOQUE DE ESTILO
-
-Esto va pegado al final de cada prompt, sin cambiar ni una palabra:
-
-```
-3D rendered icon, glossy plastic material, chunky rounded forms, saturated
-magenta pink #E90C80 and bright yellow #F2D609 with small green #3FF62A accents,
-soft studio lighting from above, subtle contact shadow, small radiating dash
-marks around the object like a sticker burst, the radiating dashes must be
-magenta pink, yellow and green only, never white and never black, the object
-must have no white outline and no sticker border, single centered object, plain
-white background, no text, no letters, playful and bold, high detail,
-product render style
-```
-
-**Las dos cláusulas del medio no estaban en la primera versión.** Se añadieron
-después de generar la primera tanda, porque el modelo se desvió justo ahí:
-puso los rayitos en blanco en cuatro iconos y en negro en el reloj, y le
-pegó un contorno blanco de sticker a la calculadora y al mapa de Cuba.
-Son los dos fallos que rompen la unidad del pack.
-
----
-
-## LOS 15 ICONOS
-
-### 1 · Interrogación
-*Lunes — el gancho del descuentico*
-```
-A large 3D question mark symbol, pink with a yellow outline, floating slightly tilted
-```
-
-### 2 · Bombilla
-*Lunes — "contesta con una pregunta"*
-```
-A glowing light bulb with a pink glass bulb and yellow filament, small green check mark badge beside it
-```
-
-### 3 · Diana con flecha
-*Lunes — "¿le alcanza para otro?"*
-```
-A target dartboard with alternating pink and yellow rings, a yellow arrow hitting the bullseye, small green accent on the arrow tail
-```
-Sin blanco en los anillos: el blanco se confunde con el fondo al recortar.
-
-### 4 · Moneda que cae
-*Lunes — "bajar el precio"*
-```
-A golden yellow coin tilting and falling downward, with a small pink downward arrow beside it
-```
-
-### 5 · Bocadillo de chat
-*Los cuatro reels — el CTA*
-```
-A pink speech bubble with three white dots inside, a small yellow notification bell and a green cursor arrow beside it
-```
-
-### 6 · Lámpara UV de uñas
-*Miércoles — el gancho de la lámpara*
-```
-A small UV nail lamp device, pink casing with a yellow glowing light inside the opening
-```
-
-### 7 · Calculadora
-*Miércoles — "mira el número"*
-```
-A pink calculator with yellow buttons and a small screen showing numbers, a stack of gold coins beside it
-```
-
-### 8 · Monedas apiladas
-*Miércoles — "siete pesos por servicio"*
-```
-A small stack of golden yellow coins with a pink dollar sign floating above them
-```
-
-### 9 · Gráfico que baja
-*Miércoles — "ninguno está en tu precio"*
-```
-A pink bar chart with a yellow arrow trending downward across it
-```
-
-### 10 · Trofeo
-*Viernes — el gancho del ranking*
-```
-A golden yellow trophy cup with pink handles, small green sparkles around the rim
-```
-
-### 11 · Corona
-*Viernes — el número uno*
-```
-A golden yellow crown with pink gems set into it, tilted slightly
-```
-
-### 12 · Mapa de Cuba
-*Viernes — "todas están en el directorio"*
-```
-The island of Cuba as a simplified 3D shape in pink, with three small yellow map pin markers standing on it
-```
-
-### 13 · Reloj
-*Sábado — "perdía horas"*
-```
-An alarm clock with a pink body, yellow bells on top and green feet, plain
-cream clock face with simple dark hands, no motion lines
-```
-El "hands showing motion" de la primera versión le hizo dibujar líneas de
-movimiento negras, que es lo único que sacó a este icono del estilo.
-
-### 14 · Móvil con la app
-*Sábado — "ahora sus clientas entran"*
-```
-A smartphone standing upright, pink case, showing a simple yellow calendar grid on the screen
-```
-
-### 15 · Campana de aviso
-*Sábado — "ella solo recibe el aviso"*
-```
-A yellow notification bell tilted as if ringing, with a small pink badge circle on its corner
-```
-
-### 16 · Regalo
-*Sábado — "quince días gratis"*
-```
-A gift box with a pink box and a yellow ribbon bow on top, lid slightly lifted
-```
-
-### 17 · Flecha hacia arriba
-*Sábado — "link en la bio"*
-```
-A thick pink arrow curving upward, with small yellow motion dashes trailing behind it
+A large 3D question mark symbol, pink with a yellow outline, floating slightly tilted, 3D rendered icon, glossy plastic material, chunky rounded forms, saturated magenta pink #E90C80 and bright yellow #F2D609 with small green #3FF62A accents, soft studio lighting from above, subtle contact shadow, small radiating dash marks around the object like a sticker burst, the radiating dashes must be magenta pink, yellow and green only, never white and never black, the object must have no white outline and no sticker border, single centered object, plain white background, no text, no letters, playful and bold, high detail, product render style
 ```
 
 ---
 
-## Qué revisar antes de darlos por buenos
+## 2 · Bombilla
+*Lunes · "contesta con una pregunta"*
 
-**Que no haya letras.** El modelo cuela texto en los iconos aunque le digas que no — sobre todo en la calculadora y el móvil. Si aparece cualquier palabra, se regenera. Una letra mal escrita en pantalla arruina el reel entero.
+```
+A glowing light bulb with a pink glass bulb and yellow filament, small green check mark badge beside it, 3D rendered icon, glossy plastic material, chunky rounded forms, saturated magenta pink #E90C80 and bright yellow #F2D609 with small green #3FF62A accents, soft studio lighting from above, subtle contact shadow, small radiating dash marks around the object like a sticker burst, the radiating dashes must be magenta pink, yellow and green only, never white and never black, the object must have no white outline and no sticker border, single centered object, plain white background, no text, no letters, playful and bold, high detail, product render style
+```
 
-**Que el fondo sea blanco liso**, sin degradado ni sombra de estudio. Si tiene degradado, el recorte de CapCut deja un halo gris.
+---
 
-**Que sean del mismo pack.** Ponlos los 15 juntos en una pantalla. Si uno tiene otro brillo, otra saturación o menos volumen, ese se regenera. Es más fácil verlo comparándolos que uno a uno.
+## 3 · Diana con flecha
+*Lunes · "¿le alcanza para otro?"*
+
+```
+A target dartboard with alternating pink and yellow rings, a yellow arrow hitting the bullseye, small green accent on the arrow tail, 3D rendered icon, glossy plastic material, chunky rounded forms, saturated magenta pink #E90C80 and bright yellow #F2D609 with small green #3FF62A accents, soft studio lighting from above, subtle contact shadow, small radiating dash marks around the object like a sticker burst, the radiating dashes must be magenta pink, yellow and green only, never white and never black, the object must have no white outline and no sticker border, single centered object, plain white background, no text, no letters, playful and bold, high detail, product render style
+```
+
+Sin blanco en los anillos: al recortar se confunde con el fondo.
+
+---
+
+## 4 · Moneda que cae
+*Lunes · "bajar el precio"*
+
+```
+A golden yellow coin tilting and falling downward, with a small pink downward arrow beside it, 3D rendered icon, glossy plastic material, chunky rounded forms, saturated magenta pink #E90C80 and bright yellow #F2D609 with small green #3FF62A accents, soft studio lighting from above, subtle contact shadow, small radiating dash marks around the object like a sticker burst, the radiating dashes must be magenta pink, yellow and green only, never white and never black, the object must have no white outline and no sticker border, single centered object, plain white background, no text, no letters, playful and bold, high detail, product render style
+```
+
+---
+
+## 5 · Bocadillo de chat
+*Los cuatro reels · el CTA*
+
+```
+A pink speech bubble with three white dots inside, a small yellow notification bell and a green cursor arrow beside it, 3D rendered icon, glossy plastic material, chunky rounded forms, saturated magenta pink #E90C80 and bright yellow #F2D609 with small green #3FF62A accents, soft studio lighting from above, subtle contact shadow, small radiating dash marks around the object like a sticker burst, the radiating dashes must be magenta pink, yellow and green only, never white and never black, the object must have no white outline and no sticker border, single centered object, plain white background, no text, no letters, playful and bold, high detail, product render style
+```
+
+---
+
+## 6 · Lámpara UV de uñas
+*Miércoles · el gancho de la lámpara*
+
+```
+A small UV nail lamp device, pink casing with a yellow glowing light inside the opening, 3D rendered icon, glossy plastic material, chunky rounded forms, saturated magenta pink #E90C80 and bright yellow #F2D609 with small green #3FF62A accents, soft studio lighting from above, subtle contact shadow, small radiating dash marks around the object like a sticker burst, the radiating dashes must be magenta pink, yellow and green only, never white and never black, the object must have no white outline and no sticker border, single centered object, plain white background, no text, no letters, playful and bold, high detail, product render style
+```
+
+---
+
+## 7 · Calculadora
+*Miércoles · "mira el número"*
+
+```
+A pink calculator with yellow buttons and a small screen showing numbers, a stack of gold coins beside it, 3D rendered icon, glossy plastic material, chunky rounded forms, saturated magenta pink #E90C80 and bright yellow #F2D609 with small green #3FF62A accents, soft studio lighting from above, subtle contact shadow, small radiating dash marks around the object like a sticker burst, the radiating dashes must be magenta pink, yellow and green only, never white and never black, the object must have no white outline and no sticker border, single centered object, plain white background, no text, no letters, playful and bold, high detail, product render style
+```
+
+---
+
+## 8 · Monedas apiladas
+*Miércoles · "siete pesos por servicio"*
+
+```
+A small stack of golden yellow coins with a pink dollar sign floating above them, 3D rendered icon, glossy plastic material, chunky rounded forms, saturated magenta pink #E90C80 and bright yellow #F2D609 with small green #3FF62A accents, soft studio lighting from above, subtle contact shadow, small radiating dash marks around the object like a sticker burst, the radiating dashes must be magenta pink, yellow and green only, never white and never black, the object must have no white outline and no sticker border, single centered object, plain white background, no text, no letters, playful and bold, high detail, product render style
+```
+
+---
+
+## 9 · Gráfico que baja
+*Miércoles · "ninguno está en tu precio"*
+
+```
+A pink bar chart with a yellow arrow trending downward across it, 3D rendered icon, glossy plastic material, chunky rounded forms, saturated magenta pink #E90C80 and bright yellow #F2D609 with small green #3FF62A accents, soft studio lighting from above, subtle contact shadow, small radiating dash marks around the object like a sticker burst, the radiating dashes must be magenta pink, yellow and green only, never white and never black, the object must have no white outline and no sticker border, single centered object, plain white background, no text, no letters, playful and bold, high detail, product render style
+```
+
+---
+
+## 10 · Trofeo
+*Viernes · el gancho del ranking*
+
+```
+A golden yellow trophy cup with pink handles, small green sparkles around the rim, 3D rendered icon, glossy plastic material, chunky rounded forms, saturated magenta pink #E90C80 and bright yellow #F2D609 with small green #3FF62A accents, soft studio lighting from above, subtle contact shadow, small radiating dash marks around the object like a sticker burst, the radiating dashes must be magenta pink, yellow and green only, never white and never black, the object must have no white outline and no sticker border, single centered object, plain white background, no text, no letters, playful and bold, high detail, product render style
+```
+
+---
+
+## 11 · Corona
+*Viernes · el número uno*
+
+```
+A golden yellow crown with pink gems set into it, tilted slightly, 3D rendered icon, glossy plastic material, chunky rounded forms, saturated magenta pink #E90C80 and bright yellow #F2D609 with small green #3FF62A accents, soft studio lighting from above, subtle contact shadow, small radiating dash marks around the object like a sticker burst, the radiating dashes must be magenta pink, yellow and green only, never white and never black, the object must have no white outline and no sticker border, single centered object, plain white background, no text, no letters, playful and bold, high detail, product render style
+```
+
+---
+
+## 12 · Mapa de Cuba
+*Viernes · "todas están en el directorio"*
+
+```
+The island of Cuba as a simplified 3D shape in pink, with three small yellow map pin markers standing on it, 3D rendered icon, glossy plastic material, chunky rounded forms, saturated magenta pink #E90C80 and bright yellow #F2D609 with small green #3FF62A accents, soft studio lighting from above, subtle contact shadow, small radiating dash marks around the object like a sticker burst, the radiating dashes must be magenta pink, yellow and green only, never white and never black, the object must have no white outline and no sticker border, single centered object, plain white background, no text, no letters, playful and bold, high detail, product render style
+```
+
+---
+
+## 13 · Reloj
+*Sábado · "perdía horas"*
+
+```
+An alarm clock with a pink body, yellow bells on top and green feet, plain cream clock face with simple dark hands, no motion lines, 3D rendered icon, glossy plastic material, chunky rounded forms, saturated magenta pink #E90C80 and bright yellow #F2D609 with small green #3FF62A accents, soft studio lighting from above, subtle contact shadow, small radiating dash marks around the object like a sticker burst, the radiating dashes must be magenta pink, yellow and green only, never white and never black, the object must have no white outline and no sticker border, single centered object, plain white background, no text, no letters, playful and bold, high detail, product render style
+```
+
+El "hands showing motion" de la primera versión le hizo dibujar líneas negras.
+
+---
+
+## 14 · Móvil con la app
+*Sábado · "ahora sus clientas entran"*
+
+```
+A smartphone standing upright, pink case, showing a simple yellow calendar grid on the screen, 3D rendered icon, glossy plastic material, chunky rounded forms, saturated magenta pink #E90C80 and bright yellow #F2D609 with small green #3FF62A accents, soft studio lighting from above, subtle contact shadow, small radiating dash marks around the object like a sticker burst, the radiating dashes must be magenta pink, yellow and green only, never white and never black, the object must have no white outline and no sticker border, single centered object, plain white background, no text, no letters, playful and bold, high detail, product render style
+```
+
+---
+
+## 15 · Campana de aviso
+*Sábado · "ella solo recibe el aviso"*
+
+```
+A yellow notification bell tilted as if ringing, with a small pink badge circle on its corner, 3D rendered icon, glossy plastic material, chunky rounded forms, saturated magenta pink #E90C80 and bright yellow #F2D609 with small green #3FF62A accents, soft studio lighting from above, subtle contact shadow, small radiating dash marks around the object like a sticker burst, the radiating dashes must be magenta pink, yellow and green only, never white and never black, the object must have no white outline and no sticker border, single centered object, plain white background, no text, no letters, playful and bold, high detail, product render style
+```
+
+---
+
+## 16 · Regalo
+*Sábado · "quince días gratis"*
+
+```
+A gift box with a pink box and a yellow ribbon bow on top, lid slightly lifted, 3D rendered icon, glossy plastic material, chunky rounded forms, saturated magenta pink #E90C80 and bright yellow #F2D609 with small green #3FF62A accents, soft studio lighting from above, subtle contact shadow, small radiating dash marks around the object like a sticker burst, the radiating dashes must be magenta pink, yellow and green only, never white and never black, the object must have no white outline and no sticker border, single centered object, plain white background, no text, no letters, playful and bold, high detail, product render style
+```
+
+---
+
+## 17 · Flecha hacia arriba
+*Sábado · "link en la bio"*
+
+```
+A thick pink arrow curving upward, with small yellow motion dashes trailing behind it, 3D rendered icon, glossy plastic material, chunky rounded forms, saturated magenta pink #E90C80 and bright yellow #F2D609 with small green #3FF62A accents, soft studio lighting from above, subtle contact shadow, small radiating dash marks around the object like a sticker burst, the radiating dashes must be magenta pink, yellow and green only, never white and never black, the object must have no white outline and no sticker border, single centered object, plain white background, no text, no letters, playful and bold, high detail, product render style
+```
+
+---
+
+## Antes de darlos por buenos
+
+**Sin letras.** El modelo cuela texto aunque se lo prohíbas. Un número en una calculadora
+o las horas de un reloj están bien — lo que no puede aparecer es una palabra, porque
+suele salir mal escrita y eso arruina el reel entero.
+
+**Fondo blanco liso**, sin degradado. Con degradado el recorte de CapCut deja halo gris.
+
+**Sin contorno blanco de sticker.** Le pasó a la calculadora y al mapa de Cuba en la
+primera tanda. Suelto no se nota; junto a los demás, sí.
+
+**Los rayitos en rosa, amarillo y verde.** Nunca blancos ni negros. Es el detalle que
+unifica el pack y es donde más se desvía el modelo.
+
+**Míralos los 17 juntos al final.** Si uno tiene otro brillo o menos volumen, se ve al
+instante comparándolos. De uno en uno, no.
 
 ---
 
 ## Para reels nuevos
 
-El icono se elige por lo que **hace** el bloque, no por lo que dice literalmente:
+El icono se elige por lo que **hace** el bloque, no por lo que dice literalmente. Un bloque
+que nombra una pérdida lleva la moneda que cae aunque la palabra "moneda" no aparezca.
 
 | El bloque hace | Icono |
 |---|---|
@@ -184,4 +210,4 @@ El icono se elige por lo que **hace** el bloque, no por lo que dice literalmente
 | Cierra pidiendo un comentario | bocadillo de chat |
 | Manda a la bio | flecha arriba |
 
-Con estos 15 están cubiertos los cinco pilares. Solo hace falta generar más si sale un tema nuevo.
+Con estos 17 están cubiertos los cinco pilares.
