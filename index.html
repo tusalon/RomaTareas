@@ -32,6 +32,44 @@
   h1 { font-family: Georgia, 'Times New Roman', serif; font-size: 28px; margin: 0; letter-spacing: -.02em; }
   .salir { background: none; border: 0; color: var(--text-muted); font-size: 13px; cursor: pointer; padding: 4px; }
 
+  /* --- briefing del dia: lo primero que se ve al abrir --- */
+  .brief {
+    background: var(--primary); color: #fff; border-radius: 16px;
+    padding: 18px; margin-bottom: 22px; box-shadow: var(--shadow);
+  }
+  .brief .kicker {
+    font-size: 11px; font-weight: 700; letter-spacing: .14em;
+    text-transform: uppercase; opacity: .65; margin-bottom: 6px;
+  }
+  .brief h2 {
+    font-family: Georgia, 'Times New Roman', serif; font-size: 21px;
+    margin: 0 0 8px; line-height: 1.25; font-weight: 500;
+  }
+  .brief .porque { font-size: 14px; line-height: 1.55; opacity: .9; margin: 0; }
+  .brief .necesito {
+    margin-top: 12px; padding: 10px 12px; border-radius: 10px;
+    background: rgba(255,255,255,.14); font-size: 13.5px; line-height: 1.5;
+  }
+  .brief .necesito b { display: block; font-size: 11px; letter-spacing: .1em;
+    text-transform: uppercase; opacity: .7; margin-bottom: 2px; font-weight: 700; }
+  .brief button.mas-brief {
+    background: none; border: 0; color: #fff; font: inherit; font-size: 13px;
+    font-weight: 600; cursor: pointer; padding: 12px 0 0; text-decoration: underline;
+  }
+  .brief .detalle-brief { display: none; margin-top: 12px; }
+  .brief .detalle-brief.abierto { display: block; }
+  .brief .detalle-brief pre {
+    margin: 0; padding: 12px; border-radius: 10px; background: rgba(0,0,0,.22);
+    font-family: ui-monospace, Consolas, monospace; font-size: 12px; line-height: 1.6;
+    white-space: pre-wrap; word-wrap: break-word; max-height: 50vh; overflow-y: auto;
+  }
+  .brief table { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 12.5px; }
+  .brief th { text-align: left; font-size: 10.5px; letter-spacing: .1em;
+    text-transform: uppercase; opacity: .6; padding: 4px 6px 6px 0; font-weight: 700; }
+  .brief td { padding: 5px 6px 5px 0; border-top: 1px solid rgba(255,255,255,.16); vertical-align: top; }
+  .brief td:first-child { white-space: nowrap; font-weight: 600; }
+  .brief .hoy-fila td { color: #FFD9C9; }
+
   .grupo { margin-bottom: 26px; }
   .grupo h2 {
     font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
@@ -161,6 +199,7 @@
       <h1>Tareas</h1>
       <button class="salir" id="salir">Salir</button>
     </header>
+    <div id="brief"></div>
     <div id="lista"><p class="vacio">Cargando…</p></div>
   </div>
 
@@ -579,9 +618,122 @@
   var pantallaPin = document.getElementById('pantalla-pin');
   var pantallaApp = document.getElementById('pantalla-app');
 
+  // --- el briefing del dia -----------------------------------------------
+  // Se lee de briefing.json, que vive en el repo. Si no hay entrada para hoy,
+  // la tarjeta no se pinta: mejor nada que un briefing de otro dia.
+  function claveHoy() {
+    var d = new Date();
+    return d.getFullYear() + '-' +
+           String(d.getMonth() + 1).padStart(2, '0') + '-' +
+           String(d.getDate()).padStart(2, '0');
+  }
+
+  async function pintarBrief() {
+    var caja = document.getElementById('brief');
+    caja.innerHTML = '';
+
+    var datos;
+    try {
+      var r = await fetch('briefing.json?v=' + Date.now());
+      if (!r.ok) return;
+      datos = await r.json();
+    } catch (e) { return; }
+
+    var hoy = claveHoy();
+    var dia = datos.dias && datos.dias[hoy];
+    if (!dia) return;
+
+    var card = document.createElement('section');
+    card.className = 'brief';
+
+    var kicker = document.createElement('p');
+    kicker.className = 'kicker';
+    kicker.textContent = 'Semana del ' + (datos.semana || '');
+    card.appendChild(kicker);
+
+    var h2 = document.createElement('h2');
+    h2.textContent = dia.titular;
+    card.appendChild(h2);
+
+    var porque = document.createElement('p');
+    porque.className = 'porque';
+    porque.textContent = dia.porque;
+    card.appendChild(porque);
+
+    if (dia.necesito) {
+      var nec = document.createElement('div');
+      nec.className = 'necesito';
+      var et = document.createElement('b');
+      et.textContent = 'Necesito de ti';
+      nec.appendChild(et);
+      nec.appendChild(document.createTextNode(dia.necesito));
+      card.appendChild(nec);
+    }
+
+    var boton = document.createElement('button');
+    boton.className = 'mas-brief';
+    boton.type = 'button';
+    boton.textContent = 'Ver el detalle y la semana ▾';
+
+    var det = document.createElement('div');
+    det.className = 'detalle-brief';
+
+    if (dia.cuerpo) {
+      var pre = document.createElement('pre');
+      pre.textContent = dia.cuerpo;
+      det.appendChild(pre);
+    }
+
+    if (datos.resumen && datos.resumen.length) {
+      var tabla = document.createElement('table');
+      var thead = document.createElement('tr');
+      ['Día', 'Pieza', 'Vende'].forEach(function (t) {
+        var th = document.createElement('th');
+        th.textContent = t;
+        thead.appendChild(th);
+      });
+      tabla.appendChild(thead);
+
+      datos.resumen.forEach(function (f) {
+        var tr = document.createElement('tr');
+        // La fila de hoy se marca, para ubicarse de un vistazo.
+        if (dia.titular && f.dia && hoy.slice(8) === String(new Date().getDate()).padStart(2, '0')
+            && f.dia.indexOf(String(new Date().getDate())) !== -1) {
+          tr.className = 'hoy-fila';
+        }
+        [f.dia, f.pieza, f.vende].forEach(function (v) {
+          var td = document.createElement('td');
+          td.textContent = v;
+          tr.appendChild(td);
+        });
+        tabla.appendChild(tr);
+      });
+      det.appendChild(tabla);
+
+      if (datos.reparto) {
+        var rep = document.createElement('p');
+        rep.className = 'porque';
+        rep.style.marginTop = '10px';
+        rep.style.fontSize = '12px';
+        rep.textContent = datos.reparto;
+        det.appendChild(rep);
+      }
+    }
+
+    boton.addEventListener('click', function () {
+      var abierto = det.classList.toggle('abierto');
+      boton.textContent = abierto ? 'Ocultar ▴' : 'Ver el detalle y la semana ▾';
+    });
+
+    card.appendChild(boton);
+    card.appendChild(det);
+    caja.appendChild(card);
+  }
+
   async function entrar() {
     pantallaPin.hidden = true;
     pantallaApp.hidden = false;
+    pintarBrief();
     await pintar();
   }
 

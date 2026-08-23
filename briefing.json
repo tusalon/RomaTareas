@@ -1,0 +1,96 @@
+{
+ "semana": "22 al 29 de agosto de 2026",
+ "reparto": "6 publicaciones · 2 venden (33%) — 33 historias · 10 venden (30%)",
+ "dias": {
+  "2026-08-22": {
+   "titular": "Hoy es el único día de la semana que empujamos al producto pago.",
+   "porque": "Uno de siete. Después de seis días dando sin pedir nada, hoy te has ganado el derecho a hablar de precio.",
+   "necesito": "Una captura de la app de un salón real: su nombre, sus colores, sus servicios.",
+   "cuerpo": "LA PIEZA\nReel de 24s con el testimonio de Carla:\n\"Las clientas piensan que invertí miles.\"\n\nEl segundo 15 es el que convierte — \"menos que una manicura\".\nTraduce los 1.500 CUP a algo que cobras en una hora, y desarma\nel precio sin decir la cifra.\n\nLA IMAGEN\nNegro para la cita del principio y el cierre.\nCrema para la captura de la app.\nMagenta para \"menos que una manicura\" y los 15 días.\n\nLa captura del segundo 5 es imprescindible. Sin ella el testimonio\nes una frase sin respaldo, y hoy es justo el día que no puede\nsonar a promesa.\n\nEL CTA\nHoy sí: \"link en la bio\". Es el único día que la bio y el CTA\ncoinciden, porque la bio va a la página comercial.\n\nLAS 6 HISTORIAS (hoy van dos CTA)\n1 · encuesta: \"¿cuántos mensajes recibiste hoy solo para cuadrar\n    una cita?\" → Menos de 5 / Perdí la cuenta\n2 · valor: \"El tiempo que pasas cuadrando citas también es trabajo.\n    Solo que no te lo pagan.\"\n3 · prueba: captura del panel con la semana llena, sin un WhatsApp\n4 · NUEVOS EN EL HUB — bienvenida con nombre:\n       💅 Amy Studio — Plaza de la Revolución, La Habana\n       👁️ NEEA Lashes — Camagüey\n    Etiquétalas y mándales la historia por privado para que la\n    compartan. Ese reenvío es lo que hace que la sección se pague sola.\n5 · CTA: 15 días gratis, link en bio\n6 · CTA: \"¿aún no estás en el directorio? Responde CUBA\" ← gratis\n\nCierras el día con la puerta barata abierta, no con el precio.\n\nMAÑANA\nDomingo: la tanda. Hora y media y dejas la semana entera lista."
+  },
+  "2026-08-23": {
+   "titular": "Hoy vamos a dejar la semana entera lista.",
+   "porque": "Es el día que decide si el ritmo aguanta. 33 historias no salen improvisando: hoy pre-armamos 18 y el resto sale solo durante la semana.",
+   "necesito": "Hora y media tuya y el móvil. Nada más.",
+   "cuerpo": "━━━ PRIMERO, LOS DATOS (10 min) ━━━\nCorre esto y guarda lo que salga, alimenta las historias de valor:\n\n  python radar.py precios\n  python radar.py nuevos\n\n━━━ LAS 18 HISTORIAS PRE-ARMADAS (60 min) ━━━\nTodas son texto sobre color. Fondo crema, texto negro, la palabra\nclave en magenta. Se hacen en Canva en tanda, una plantilla y a\ncambiar el texto.\n\n▸ LAS 6 DE VALOR — slot 2 de cada día\n\nLUNES · \"La rebaja no te gana una clienta. Te gana una que va a\n         pedirte rebaja siempre.\"\nMARTES · \"Un turno doble no te cuesta un turno. Te cuesta una clienta.\"\nMIÉRCOLES · \"El torno también se gasta. ¿Está en tu precio?\"\nJUEVES · \"Especializarte no cierra puertas. Hace que te encuentren\n          las clientas correctas.\"\nVIERNES · \"Publicar tus servicios con precio es lo que hace que te\n           busquen sin conocerte.\"\nSÁBADO · \"El tiempo que pasas cuadrando citas también es trabajo.\n          Solo que no te lo pagan.\"\n\n▸ LAS 6 CTA — slot 5 de cada día\n\nLUNES · \"¿Te piden rebaja seguido? Responde PRECIO\"\nMARTES · \"¿Has dado dos turnos a la misma hora? Responde AGENDA\"\nMIÉRCOLES · \"Responde HERRAMIENTA y te paso la cuenta hecha\"\nJUEVES · \"¿Quieres salir en el próximo Salón de la Semana?\n          Responde SALÓN\"   ← rebote, no venta dura\nVIERNES · \"¿No apareces en el directorio? Responde CUBA. Es gratis\"\nSÁBADO · \"15 días gratis para probarlo. Link en la bio 👆\"\n\n▸ LOS 6 GANCHOS — slot 1, encuestas de dos opciones\n\nLUNES · \"¿Cuántas veces te pidieron rebaja este mes?\"\n         → Ninguna / Perdí la cuenta\nMARTES · \"¿Has dado dos turnos a la misma hora?\"\n         → Sí, más de una vez / Nunca (aún)\nMIÉRCOLES · \"¿Sabes cuánto te costó tu lámpara?\"\n         → Exacto / Ni idea\nJUEVES · \"¿Haces de todo o te especializas?\"\n         → De todo / Solo lo mío\nVIERNES · \"¿Tienes tus servicios publicados con precio?\"\n         → Todos / Ninguno\nSÁBADO · \"¿Cuántos mensajes recibiste hoy para cuadrar citas?\"\n         → Menos de 5 / Perdí la cuenta\n\n━━━ LOS DOS REELS DE LA ESCUELA (20 min) ━━━\nLunes y miércoles se graban HOY, juntos. Los guiones están en sus\ntareas. Los del viernes y sábado no: dependen de datos de la semana\ny se hacen el jueves.\n\n━━━ LO QUE QUEDA PARA LA SEMANA ━━━\n15 historias reactivas: los slots 3 (prueba) y 4 (comunidad). Esas\nsalen de lo que pase — un comentario, un negocio nuevo, una respuesta\nde la caja de preguntas. No se pueden pre-armar y está bien así."
+  },
+  "2026-08-24": {
+   "titular": "Hoy vamos a publicar el reel del descuentico.",
+   "porque": "La Escuela no menciona ninguna app. Es el pilar que trae seguidoras que aún no te conocen, y el que más se guarda. Hoy no vendemos nada.",
+   "necesito": "Nada. El reel ya lo grabaste ayer.",
+   "cuerpo": "LA PIEZA\nReel de 25s. Gancho: \"¿ME HACES UN DESCUENTICO?\" en el frame 0,\nsin fade — tiene que leerse en mute.\nEl guion completo está en la tarea de hoy.\n\nLA IMAGEN\nFondo negro con texto blanco enorme para el gancho y el cierre.\nFondo magenta para la respuesta (\"¿Qué presupuesto tienes?\").\nFondo crema para los dos casos del medio.\nSin capturas de app: hoy no se nombra ningún producto.\n\nEl segundo 21 es el que se guarda — la frase de que la rebaja te\ngana una clienta que va a pedirte rebaja siempre. Que se lea entera,\nsin prisa.\n\nLAS 5 HISTORIAS\n1 · encuesta de la rebaja      2 · la frase de valor\n3 · captura de un DM real pidiendo rebaja (tapa el nombre)\n4 · repost de un trabajo del directorio\n5 · CTA: responde PRECIO\n\nDESPUÉS\nResponde cada PRECIO en menos de una hora. Ese es el trabajo\nde verdad del día, no el post."
+  },
+  "2026-08-25": {
+   "titular": "Hoy toca el carrusel del turno doble.",
+   "porque": "El dolor más universal del oficio y el que más comentarios genera. Toca Rservasroma sin pedirte que compres nada.",
+   "necesito": "Una captura del panel con un horario ya ocupado, en gris.",
+   "cuerpo": "LA PIEZA\nCarrusel de 7 slides. El texto exacto está en la tarea.\n\nLA IMAGEN\nSlides 1 a 4 en negro: es la parte que duele.\nSlides 5 y 6 en magenta: es donde aparece la salida.\nSlide 7 negro con la palabra AGENDA grande y en magenta.\n\nEl slide 6 necesita la captura del panel. Sin ella el carrusel se\nqueda en queja; con ella se convierte en demostración.\n\nLAS 5 HISTORIAS\n1 · encuesta del turno doble   2 · la frase de valor\n3 · la misma captura del panel  4 · comunidad\n5 · CTA: responde AGENDA\n+ 1 extra de rebote: \"¿quieres salir en el próximo Radar?\"\n\nOJO\nEl Radar de Precios es quincenal y el último salió el 18.\nEl próximo es el martes 1 de septiembre. Hoy va El Caos."
+  },
+  "2026-08-26": {
+   "titular": "Hoy vamos con la lámpara que nadie mete en el precio.",
+   "porque": "Segundo día de La Escuela, otra vez sin producto. Prepara el terreno de RomaFinanzas sin nombrarlo: cuando alguien aplique esta cuenta a mano, va a querer una herramienta.",
+   "necesito": "Nada. Grabado el domingo.",
+   "cuerpo": "LA PIEZA\nReel de 28s. Una cuenta hecha en voz alta, paso a paso.\n\nLA IMAGEN\nLos números son los protagonistas. Fondo blanco con las cifras\ngrandes en negro para la cuenta, y el resultado (7 CUP por servicio)\nen magenta a pantalla completa.\nNada de capturas. Es matemática, no producto.\n\n⚠️ CUIDADO CON UN DATO\nLos 20.000 CUP de la lámpara son un EJEMPLO inventado. En el video\ndilo así: \"digamos que te costó\". Si lo presentas como precio de\nmercado y alguien lo desmiente, pierdes la credibilidad de toda\nla cuenta.\n\nLAS 5 HISTORIAS\n1 · encuesta del costo de la lámpara   2 · la frase de valor\n3 · captura de la ficha de costo        4 · comunidad\n5 · CTA: responde HERRAMIENTA"
+  },
+  "2026-08-27": {
+   "titular": "Hoy destacamos a Liz Nails, de Playa.",
+   "porque": "Es el contenido que más lealtad genera. Ella lo comparte, su familia lo comparte, sus clientas lo comparten. Y para salir hay que estar en el directorio — eso solo mete negocios sin vender nada.",
+   "necesito": "Su permiso y sus respuestas en audio. Si no llegaron, cambia de negocio y no publiques.",
+   "cuerpo": "EL ÁNGULO\nDe sus 16 servicios, casi todos son gel: poly gel, soft gel, gel\nde construcción, base rubber. No hace de todo — hace gel.\nEn un directorio donde casi todas ofrecen lo mismo, la que elige\nqué NO hacer destaca sola.\n\nLA PIEZA\nCarrusel de 7 slides. Texto completo en la tarea.\n\nLA IMAGEN\nTodo en crema, salvo el slide de su consejo, que va en magenta.\nEs una pieza cálida, no de impacto: aquí no gritamos.\nSi te manda fotos de su trabajo, van en los slides 2 y 3.\n\n⚠️ NO PUBLICAR\nSu poly gel está en 2.000 CUP y la mediana nacional del gel es 1.500.\nEncaja con el relato de especialista, pero NO lo digas: nunca se\ncompara el precio de un negocio identificable con nadie.\n\nTAMBIÉN HOY\nGraba los reels del viernes y el sábado. El del viernes necesita\ndatos frescos, así que corre radar.py ranking antes.\n\nLAS 5 HISTORIAS\n1 · encuesta especializarse vs hacer de todo   2 · la frase de valor\n3 · trabajo de Liz (con permiso)                4 · etiquétala\n5 · CTA de rebote: responde SALÓN"
+  },
+  "2026-08-28": {
+   "titular": "Hoy sí vendemos — pero pedimos algo gratis.",
+   "porque": "El Ranking es el día que la gente entra a ver si salió. Y quien sale, lo comparte con su audiencia entera. Cada negocio del ranking es un altavoz que no te cuesta nada.",
+   "necesito": "Correr radar.py ranking HOY. Los números de hace una semana ya no sirven.",
+   "cuerpo": "⚠️ ANTES DE NADA\n  python radar.py ranking\n\nLos datos cambian rápido: BELLALYS pasó de 36 a 81 servicios en\ncuatro días. Publicar el número viejo es publicar un dato falso.\n\nNO uses el ranking de valoraciones. Hay 6 reseñas en toda la base\ny ningún negocio llega a 3. El script se niega a generarlo por eso.\nUsa el de negocios con más servicios publicados: premia constancia\ny tiene datos de sobra.\n\nLA PIEZA\nReel de 20s con el top 3 en cuenta atrás.\n\nLA IMAGEN\nNegro para el título. Crema para cada puesto, entrando desde abajo\nuno a uno. Magenta para el cierre y para la palabra GRATIS.\nEl número 1 lleva un brillo — es el premio.\n\nROTA LA CATEGORÍA\nEsta semana el top general. La próxima \"las que empiezan\" o \"Oriente\".\nSi gana siempre la misma, el resto deja de mirar.\n\nLAS 6 HISTORIAS (hoy van dos CTA)\n1 · encuesta de servicios publicados   2 · la frase de valor\n3 · captura del ranking                 4 · etiqueta a los tres\n5 · CTA: responde CUBA (gratis)\n6 · CTA: mira la destacada DIRECTORIO"
+  },
+  "2026-08-29": {
+   "titular": "Hoy es el único día que empujamos al producto pago.",
+   "porque": "Uno de siete. Y es también el día que mueve a quien ya paga hacia RomaFinanzas y RomaCrece — ese trabajo no lo hacía nadie, y por eso hay un solo cliente premium.",
+   "necesito": "Una captura de la app de un salón real: su nombre, sus colores, sus servicios.",
+   "cuerpo": "LA PIEZA\nReel de 22s con el testimonio de Yuliet, de Exotic Nails.\nCita literal, sin adornar.\n\nLA IMAGEN\nNegro para la cita. Crema para la captura de la app. Magenta para\nel cierre y los 15 días.\n\nLa captura del segundo 9 es imprescindible. Sin ella el testimonio\nes una frase sin respaldo, y el sábado es justo el día que no puede\nsonar a promesa.\n\nEL CTA\nHoy sí: \"link en la bio\". Es el único día que la bio y el CTA\ncoinciden, porque la bio va a la página comercial.\n\nLAS 6 HISTORIAS (dos CTA otra vez)\n1 · encuesta de los mensajes    2 · la frase de valor\n3 · captura del panel con la agenda llena\n4 · Nuevos en el Hub: bienvenida con nombre a los que entraron\n5 · CTA: 15 días gratis, link en bio\n6 · CTA: responde CUBA (gratis) ← cierras con la puerta barata abierta\n\nMAÑANA\nDomingo otra vez. Pídeme la tanda de la semana del 31."
+  }
+ },
+ "resumen": [
+  {
+   "dia": "Sábado 22",
+   "pieza": "Reel · Prueba Real — Carla",
+   "vende": "Sí · prueba 15 días"
+  },
+  {
+   "dia": "Domingo 23",
+   "pieza": "La tanda — 18 historias + 2 reels",
+   "vende": "No"
+  },
+  {
+   "dia": "Lunes 24",
+   "pieza": "Reel · La Escuela — el descuentico",
+   "vende": "No"
+  },
+  {
+   "dia": "Martes 25",
+   "pieza": "Carrusel · El Caos — el turno doble",
+   "vende": "No"
+  },
+  {
+   "dia": "Miércoles 26",
+   "pieza": "Reel · La Escuela — la lámpara",
+   "vende": "No"
+  },
+  {
+   "dia": "Jueves 27",
+   "pieza": "Carrusel · Salón de la Semana — Liz Nails",
+   "vende": "No"
+  },
+  {
+   "dia": "Viernes 28",
+   "pieza": "Reel · El Ranking",
+   "vende": "Sí · RomaHub gratis"
+  },
+  {
+   "dia": "Sábado 29",
+   "pieza": "Reel · Prueba Real",
+   "vende": "Sí · prueba 15 días"
+  }
+ ]
+}
