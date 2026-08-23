@@ -30,10 +30,18 @@ Esto va pegado al final de cada prompt, sin cambiar ni una palabra:
 3D rendered icon, glossy plastic material, chunky rounded forms, saturated
 magenta pink #E90C80 and bright yellow #F2D609 with small green #3FF62A accents,
 soft studio lighting from above, subtle contact shadow, small radiating dash
-marks around the object like a sticker burst, single centered object, plain
+marks around the object like a sticker burst, the radiating dashes must be
+magenta pink, yellow and green only, never white and never black, the object
+must have no white outline and no sticker border, single centered object, plain
 white background, no text, no letters, playful and bold, high detail,
 product render style
 ```
+
+**Las dos cláusulas del medio no estaban en la primera versión.** Se añadieron
+después de generar la primera tanda, porque el modelo se desvió justo ahí:
+puso los rayitos en blanco en cuatro iconos y en negro en el reloj, y le
+pegó un contorno blanco de sticker a la calculadora y al mapa de Cuba.
+Son los dos fallos que rompen la unidad del pack.
 
 ---
 
@@ -54,8 +62,9 @@ A glowing light bulb with a pink glass bulb and yellow filament, small green che
 ### 3 · Diana con flecha
 *Lunes — "¿le alcanza para otro?"*
 ```
-A target dartboard in pink and white rings with a yellow arrow hitting the center
+A target dartboard with alternating pink and yellow rings, a yellow arrow hitting the bullseye, small green accent on the arrow tail
 ```
+Sin blanco en los anillos: el blanco se confunde con el fondo al recortar.
 
 ### 4 · Moneda que cae
 *Lunes — "bajar el precio"*
@@ -114,8 +123,11 @@ The island of Cuba as a simplified 3D shape in pink, with three small yellow map
 ### 13 · Reloj
 *Sábado — "perdía horas"*
 ```
-An alarm clock with a pink body and yellow bells on top, hands showing motion
+An alarm clock with a pink body, yellow bells on top and green feet, plain
+cream clock face with simple dark hands, no motion lines
 ```
+El "hands showing motion" de la primera versión le hizo dibujar líneas de
+movimiento negras, que es lo único que sacó a este icono del estilo.
 
 ### 14 · Móvil con la app
 *Sábado — "ahora sus clientas entran"*
