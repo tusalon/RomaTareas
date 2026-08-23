@@ -4,244 +4,157 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>RomaTareas</title>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><text y='14' font-size='14'>✅</text></svg>">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><text y='14' font-size='14'>📅</text></svg>">
 <style>
   :root {
     --bg: #FFFAF5;
     --card: #FFFDFA;
     --text: #261D29;
-    --text-muted: #746671;
-    --border: #E5D7CD;
+    --text-soft: #4D414D;
+    --text-muted: #8A7B86;
+    --border: #E9DCD2;
     --primary: #681831;
-    --primary-hover: #8B2447;
-    --coral: #FF675C;
-    --vencida: #A83C37;
-    --vencida-bg: #FDECEB;
+    --primary-suave: rgba(104,24,49,.08);
+    --alerta: #A83C37;
     --hecho: #1F8654;
-    --shadow: 0 1px 2px rgba(76,34,50,.05), 0 8px 24px rgba(76,34,50,.05);
+    --sombra: 0 1px 2px rgba(76,34,50,.04), 0 10px 30px rgba(76,34,50,.06);
   }
-  * { box-sizing: border-box; }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
   body {
     margin: 0; background: var(--bg); color: var(--text);
     font-family: -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-    line-height: 1.5; padding: 0 0 96px;
+    line-height: 1.5;
   }
-  .wrap { max-width: 640px; margin: 0 auto; padding: 20px 16px; }
-
-  header { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 20px; }
-  h1 { font-family: Georgia, 'Times New Roman', serif; font-size: 28px; margin: 0; letter-spacing: -.02em; }
-  .salir { background: none; border: 0; color: var(--text-muted); font-size: 13px; cursor: pointer; padding: 4px; }
-
-  /* --- briefing del dia: lo primero que se ve al abrir --- */
-  .brief {
-    background: var(--primary); color: #fff; border-radius: 16px;
-    padding: 18px; margin-bottom: 22px; box-shadow: var(--shadow);
-  }
-  .brief .kicker {
-    font-size: 11px; font-weight: 700; letter-spacing: .14em;
-    text-transform: uppercase; opacity: .65; margin-bottom: 6px;
-  }
-  .brief h2 {
-    font-family: Georgia, 'Times New Roman', serif; font-size: 21px;
-    margin: 0 0 8px; line-height: 1.25; font-weight: 500;
-  }
-  .brief .porque { font-size: 14px; line-height: 1.55; opacity: .9; margin: 0; }
-  .brief .necesito {
-    margin-top: 12px; padding: 10px 12px; border-radius: 10px;
-    background: rgba(255,255,255,.14); font-size: 13.5px; line-height: 1.5;
-  }
-  .brief .necesito b { display: block; font-size: 11px; letter-spacing: .1em;
-    text-transform: uppercase; opacity: .7; margin-bottom: 2px; font-weight: 700; }
-  .brief button.mas-brief {
-    background: none; border: 0; color: #fff; font: inherit; font-size: 13px;
-    font-weight: 600; cursor: pointer; padding: 12px 0 0; text-decoration: underline;
-  }
-  .brief .detalle-brief { display: none; margin-top: 12px; }
-  .brief .detalle-brief.abierto { display: block; }
-  .brief .detalle-brief pre {
-    margin: 0; padding: 12px; border-radius: 10px; background: rgba(0,0,0,.22);
-    font-family: ui-monospace, Consolas, monospace; font-size: 12px; line-height: 1.6;
-    white-space: pre-wrap; word-wrap: break-word; max-height: 50vh; overflow-y: auto;
-  }
-  .brief table { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 12.5px; }
-  .brief th { text-align: left; font-size: 10.5px; letter-spacing: .1em;
-    text-transform: uppercase; opacity: .6; padding: 4px 6px 6px 0; font-weight: 700; }
-  .brief td { padding: 5px 6px 5px 0; border-top: 1px solid rgba(255,255,255,.16); vertical-align: top; }
-  .brief td:first-child { white-space: nowrap; font-weight: 600; }
-  .brief .hoy-fila td { color: #FFD9C9; }
-
-  .grupo { margin-bottom: 26px; }
-  .grupo h2 {
-    font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
-    color: var(--text-muted); margin: 0 0 10px;
-  }
-  .grupo.vencidas h2 { color: var(--vencida); }
-
-  .tarea {
-    background: var(--card); border: 1px solid var(--border); border-radius: 14px;
-    padding: 14px; margin-bottom: 10px; display: flex; gap: 12px; align-items: flex-start;
-    box-shadow: var(--shadow);
-  }
-  .vencidas .tarea { border-color: var(--vencida); background: var(--vencida-bg); }
-
-  .check {
-    flex: 0 0 auto; width: 30px; height: 30px; border-radius: 50%;
-    border: 2px solid var(--primary); background: transparent; cursor: pointer;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 16px; color: transparent; transition: all .15s; padding: 0;
-  }
-  .check:hover, .check:focus-visible { background: var(--primary); color: #fff; }
-
-  .cuerpo { flex: 1 1 auto; min-width: 0; }
-  .titulo { font-weight: 600; font-size: 15px; word-wrap: break-word; }
-  .detalle { font-size: 13px; color: var(--text-muted); margin-top: 3px; white-space: pre-wrap; }
-  .meta { font-size: 12px; color: var(--text-muted); margin-top: 6px; display: flex; gap: 10px; flex-wrap: wrap; }
-  .vencidas .meta { color: var(--vencida); font-weight: 600; }
-  .repite { color: var(--primary); }
-
-  .vacio { color: var(--text-muted); font-size: 14px; text-align: center; padding: 36px 12px; }
-
-  /* --- hechas hoy: confirman que el toque funciono, y dejan deshacerlo --- */
-  .hechas .tarea { opacity: .62; border-style: dashed; }
-  .hechas .titulo { text-decoration: line-through; }
-  .hechas .check {
-    border-color: var(--hecho); background: var(--hecho); color: #fff; cursor: default;
-  }
-  .deshacer {
-    background: none; border: 0; color: var(--text-muted); font: inherit; font-size: 12px;
-    cursor: pointer; padding: 4px 0 0; text-decoration: underline;
-  }
-  .deshacer:hover { color: var(--primary); }
-
-  /* --- contenido de la pieza dentro de la tarea --- */
-  .ver-contenido {
-    background: none; border: 0; color: var(--primary); font: inherit; font-size: 13px;
-    font-weight: 600; cursor: pointer; padding: 6px 0 0; text-align: left;
-  }
-  .contenido { display: none; margin-top: 10px; }
-  .contenido.abierto { display: block; }
-  .contenido pre {
-    margin: 0; padding: 12px; background: #fff; border: 1px solid var(--border);
-    border-radius: 10px; font-family: ui-monospace, 'Cascadia Mono', Consolas, monospace;
-    font-size: 12.5px; line-height: 1.55; white-space: pre-wrap; word-wrap: break-word;
-    max-height: 55vh; overflow-y: auto;
-  }
-  .copiar {
-    margin-top: 8px; font: inherit; font-size: 13px; font-weight: 600; padding: 8px 14px;
-    border: 1px solid var(--primary); border-radius: 9px; background: #fff;
-    color: var(--primary); cursor: pointer;
-  }
-  .copiar:hover { background: var(--primary); color: #fff; }
-  .copiar.hecho { border-color: var(--hecho); color: var(--hecho); background: #fff; }
-
-  /* --- importar la semana --- */
-  .importar { margin: 26px 0 8px; }
-  .importar summary {
-    cursor: pointer; font-size: 13px; font-weight: 600; color: var(--primary);
-    list-style: none; padding: 6px 0;
-  }
-  .importar summary::-webkit-details-marker { display: none; }
-  .importar summary::before { content: '+ '; }
-  .importar[open] summary::before { content: '− '; }
-  .importar textarea {
-    font-family: ui-monospace, Consolas, monospace; font-size: 12px; min-height: 110px; margin-top: 8px;
-  }
-  .importar .aviso { font-size: 13px; margin-top: 8px; min-height: 18px; }
-  .importar .aviso.ok { color: var(--hecho); }
-  .importar .aviso.mal { color: var(--vencida); }
-
-  /* --- formulario --- */
-  .nueva {
-    position: fixed; left: 0; right: 0; bottom: 0; background: var(--card);
-    border-top: 1px solid var(--border); padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
-    box-shadow: 0 -8px 24px rgba(76,34,50,.06);
-  }
-  .nueva-inner { max-width: 640px; margin: 0 auto; display: flex; flex-direction: column; gap: 8px; }
-  .fila { display: flex; gap: 8px; }
-  input, select, textarea {
-    font: inherit; font-size: 15px; padding: 11px 12px; border: 1px solid var(--border);
-    border-radius: 10px; background: #fff; color: var(--text); width: 100%; min-width: 0;
-  }
-  textarea { resize: vertical; min-height: 44px; }
-  input:focus, select:focus, textarea:focus { outline: 2px solid var(--coral); outline-offset: 1px; }
-  button.principal {
-    font: inherit; font-weight: 600; font-size: 15px; padding: 11px 18px; border: 0;
-    border-radius: 10px; background: var(--primary); color: #fff; cursor: pointer; white-space: nowrap;
-  }
-  button.principal:hover { background: var(--primary-hover); }
-  button.principal:disabled { opacity: .5; cursor: default; }
-  .desplegar { background: none; border: 0; color: var(--primary); font: inherit; font-size: 13px; cursor: pointer; padding: 2px; text-align: left; }
-  .extra { display: none; flex-direction: column; gap: 8px; }
-  .extra.abierto { display: flex; }
-
-  /* --- pantalla de PIN --- */
-  .pin-pantalla { max-width: 340px; margin: 18vh auto 0; padding: 0 20px; text-align: center; }
-  .pin-pantalla h1 { font-size: 32px; margin-bottom: 8px; }
-  .pin-pantalla p { color: var(--text-muted); font-size: 14px; margin: 0 0 22px; }
-  .pin-pantalla input { text-align: center; font-size: 22px; letter-spacing: .3em; margin-bottom: 10px; }
-  .error { color: var(--vencida); font-size: 13px; min-height: 18px; }
+  .wrap { max-width: 560px; margin: 0 auto; padding: 0 16px 60px; }
   [hidden] { display: none !important; }
+  button { font: inherit; cursor: pointer; }
+
+  /* ── cabecera ── */
+  .top { display: flex; align-items: center; justify-content: space-between; padding: 18px 0 12px; }
+  .marca { font-family: Georgia, serif; font-size: 19px; letter-spacing: -.01em; }
+  .salir { background: none; border: 0; color: var(--text-muted); font-size: 12px; padding: 6px; }
+
+  /* ── pestañas ── */
+  .tabs { display: flex; gap: 4px; background: var(--primary-suave); padding: 4px; border-radius: 12px; }
+  .tabs button {
+    flex: 1; border: 0; background: none; padding: 9px 4px; border-radius: 9px;
+    font-size: 13.5px; font-weight: 600; color: var(--text-muted); transition: all .15s;
+  }
+  .tabs button[aria-selected="true"] { background: var(--card); color: var(--primary); box-shadow: var(--sombra); }
+
+  /* ── tira de la semana ── */
+  .tira { display: flex; gap: 5px; margin: 16px 0 20px; }
+  .tira button {
+    flex: 1; border: 1px solid var(--border); background: var(--card);
+    border-radius: 12px; padding: 9px 2px 8px; display: flex; flex-direction: column;
+    align-items: center; gap: 5px; transition: all .15s; color: inherit;
+  }
+  .tira .letra { font-size: 11px; font-weight: 700; color: var(--text-muted); letter-spacing: .04em; }
+  .tira .num { font-size: 15px; font-weight: 700; line-height: 1; }
+  .tira .punto { width: 6px; height: 6px; border-radius: 50%; background: transparent; }
+  .tira .punto.pendiente { background: var(--primary); }
+  .tira .punto.hecho { background: var(--hecho); }
+  .tira .punto.tarde { background: var(--alerta); }
+  .tira button[aria-current="true"] { border-color: var(--primary); background: var(--primary); color: #fff; }
+  .tira button[aria-current="true"] .letra { color: rgba(255,255,255,.72); }
+  .tira button[aria-current="true"] .punto.pendiente { background: #fff; }
+  .tira button.es-hoy:not([aria-current="true"]) { border-color: var(--primary); }
+
+  /* ── el día ── */
+  .fecha { font-size: 11.5px; font-weight: 700; letter-spacing: .14em;
+    text-transform: uppercase; color: var(--text-muted); margin: 0 0 8px; }
+  .titular { font-family: Georgia, serif; font-size: 25px; line-height: 1.22;
+    letter-spacing: -.015em; margin: 0 0 10px; font-weight: 500; }
+  .porque { font-size: 14.5px; color: var(--text-soft); margin: 0 0 22px; }
+
+  .paso { background: var(--card); border: 1px solid var(--border); border-radius: 14px;
+    padding: 14px; margin-bottom: 10px; box-shadow: var(--sombra); }
+  .paso-fila { display: flex; gap: 12px; align-items: flex-start; }
+  .marca { flex: 0 0 auto; width: 28px; height: 28px; border-radius: 50%;
+    border: 2px solid var(--primary); background: none; color: transparent;
+    display: flex; align-items: center; justify-content: center; font-size: 15px; padding: 0; }
+  .marca:hover, .marca:focus-visible { background: var(--primary); color: #fff; }
+  .paso.listo { opacity: .55; }
+  .paso.listo .marca { background: var(--hecho); border-color: var(--hecho); color: #fff; }
+  .paso.listo .paso-titulo { text-decoration: line-through; }
+  .paso-titulo { font-weight: 600; font-size: 15px; flex: 1; min-width: 0; word-wrap: break-word; }
+  .nota { margin: 6px 0 0 40px; font-size: 12.5px; color: var(--text-muted); }
+
+  .ver { background: none; border: 0; color: var(--primary); font-size: 13px;
+    font-weight: 600; padding: 10px 0 0 40px; display: block; }
+  .guion { display: none; padding-left: 40px; margin-top: 8px; }
+  .guion.abierto { display: block; }
+  .guion pre { margin: 0; padding: 12px; background: var(--bg); border: 1px solid var(--border);
+    border-radius: 10px; font-family: ui-monospace, Consolas, monospace;
+    font-size: 12px; line-height: 1.6; white-space: pre-wrap; word-wrap: break-word;
+    max-height: 52vh; overflow-y: auto; }
+  .copiar { margin-top: 8px; font-size: 13px; font-weight: 600; padding: 8px 14px;
+    border: 1px solid var(--primary); border-radius: 9px; background: var(--card); color: var(--primary); }
+  .copiar.ok { border-color: var(--hecho); color: var(--hecho); }
+
+  .necesito { background: var(--primary); color: #fff; border-radius: 14px; padding: 14px 16px; margin-top: 20px; }
+  .necesito b { display: block; font-size: 10.5px; letter-spacing: .13em;
+    text-transform: uppercase; opacity: .68; margin-bottom: 3px; }
+  .necesito span { font-size: 14.5px; line-height: 1.5; }
+
+  .detalle-brief { margin-top: 16px; }
+  .detalle-brief summary { list-style: none; cursor: pointer; font-size: 13px;
+    font-weight: 600; color: var(--primary); padding: 8px 0; }
+  .detalle-brief summary::-webkit-details-marker { display: none; }
+  .detalle-brief summary::before { content: '▸ '; }
+  .detalle-brief[open] summary::before { content: '▾ '; }
+  .detalle-brief pre { margin: 0; padding: 13px; background: var(--card); border: 1px solid var(--border);
+    border-radius: 12px; font-family: ui-monospace, Consolas, monospace;
+    font-size: 12px; line-height: 1.62; white-space: pre-wrap; word-wrap: break-word; }
+
+  .nada { color: var(--text-muted); font-size: 14.5px; padding: 34px 6px;
+    text-align: center; line-height: 1.6; white-space: pre-line; }
+
+  /* ── rutina y más ── */
+  .seccion-tit { font-size: 11.5px; font-weight: 700; letter-spacing: .13em;
+    text-transform: uppercase; color: var(--text-muted); margin: 22px 0 10px; }
+  .campo { width: 100%; font-size: 15px; padding: 11px 12px; border: 1px solid var(--border);
+    border-radius: 10px; background: var(--card); color: var(--text); margin-bottom: 8px; font-family: inherit; }
+  textarea.campo { min-height: 90px; resize: vertical; font-family: ui-monospace, Consolas, monospace; font-size: 12px; }
+  .btn { width: 100%; border: 0; border-radius: 11px; background: var(--primary);
+    color: #fff; font-size: 15px; font-weight: 600; padding: 12px; }
+  .btn.claro { background: var(--card); color: var(--primary); border: 1px solid var(--primary); }
+  .btn:disabled { opacity: .5; }
+  .aviso { font-size: 13px; margin: 8px 0 0; min-height: 18px; }
+  .aviso.ok { color: var(--hecho); } .aviso.mal { color: var(--alerta); }
+  .fila2 { display: flex; gap: 8px; margin-bottom: 8px; }
+
+  /* ── PIN ── */
+  .pin { max-width: 320px; margin: 20vh auto 0; padding: 0 20px; text-align: center; }
+  .pin h1 { font-family: Georgia, serif; font-size: 30px; margin: 0 0 8px; font-weight: 500; }
+  .pin p { color: var(--text-muted); font-size: 14px; margin: 0 0 22px; }
+  .pin input { text-align: center; font-size: 21px; letter-spacing: .3em; }
 </style>
 </head>
 <body>
 
-<div id="pantalla-pin" class="pin-pantalla">
+<div id="p-pin" class="pin">
   <h1>RomaTareas</h1>
   <p>Escribe tu PIN. Queda guardado en este dispositivo.</p>
-  <input id="pin" type="password" inputmode="numeric" autocomplete="current-password" placeholder="••••" aria-label="PIN">
-  <button class="principal" id="entrar" style="width:100%">Entrar</button>
-  <p class="error" id="pin-error" role="alert"></p>
+  <input id="pin" class="campo" type="password" inputmode="numeric" placeholder="••••" aria-label="PIN">
+  <button class="btn" id="entrar">Entrar</button>
+  <p class="aviso mal" id="pin-error" role="alert"></p>
 </div>
 
-<div id="pantalla-app" hidden>
-  <div class="wrap">
-    <header>
-      <h1>Tareas</h1>
-      <button class="salir" id="salir">Salir</button>
-    </header>
-    <div id="brief"></div>
-    <div id="lista"><p class="vacio">Cargando…</p></div>
+<div id="p-app" class="wrap" hidden>
+  <div class="top">
+    <span class="marca">RomaTareas</span>
+    <button class="salir" id="salir">Salir</button>
   </div>
 
-  <div class="wrap" style="padding-top:0">
-    <details class="importar" id="importar">
-      <summary>Importar la semana</summary>
-      <textarea id="imp-texto" placeholder='Pega aquí el bloque que te doy cada domingo' aria-label="Contenido a importar"></textarea>
-      <div class="fila" style="margin-top:8px">
-        <button class="principal" type="button" id="imp-cargar" style="background:#fff;color:var(--primary);border:1px solid var(--primary)">Cargar semana publicada</button>
-        <button class="principal" type="button" id="imp-boton">Importar</button>
-      </div>
-      <p class="aviso" id="imp-aviso" role="status"></p>
-    </details>
-  </div>
+  <nav class="tabs" role="tablist">
+    <button role="tab" data-tab="dia" aria-selected="true">Día</button>
+    <button role="tab" data-tab="rutina" aria-selected="false">Rutina</button>
+    <button role="tab" data-tab="mas" aria-selected="false">Más</button>
+  </nav>
 
-  <form class="nueva" id="form-nueva">
-    <div class="nueva-inner">
-      <div class="fila">
-        <input id="t-titulo" placeholder="Nueva tarea" required aria-label="Título">
-        <button class="principal" type="submit">Añadir</button>
-      </div>
-      <button class="desplegar" type="button" id="mas">+ plazo, detalle y repetición</button>
-      <div class="extra" id="extra">
-        <textarea id="t-detalle" placeholder="Detalle (opcional)" aria-label="Detalle"></textarea>
-        <div class="fila">
-          <input id="t-vence" type="datetime-local" aria-label="Plazo">
-          <select id="t-repite" aria-label="Repetición">
-            <option value="">No se repite</option>
-            <option value="diaria">Cada día</option>
-            <option value="semanal:1">Cada lunes</option>
-            <option value="semanal:2">Cada martes</option>
-            <option value="semanal:3">Cada miércoles</option>
-            <option value="semanal:4">Cada jueves</option>
-            <option value="semanal:5">Cada viernes</option>
-            <option value="semanal:6">Cada sábado</option>
-            <option value="semanal:0">Cada domingo</option>
-            <option value="mensual">Cada mes</option>
-          </select>
-        </div>
-      </div>
-    </div>
-  </form>
+  <div id="tira" class="tira"></div>
+  <div id="vista"></div>
 </div>
 
 <script src="utils/config.js"></script>
@@ -253,647 +166,427 @@
   var KEY = window.SUPABASE_ANON_KEY;
   var pinHash = localStorage.getItem('romatareas-pin');
 
+  var estado = { tab: 'dia', dia: inicioDia(new Date()), tareas: [], brief: null };
+
+  var LETRAS = ['D', 'L', 'M', 'X', 'J', 'V', 'S'];
+  var NOMBRES = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+  var MESES = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+  var REPITE = { diaria: 'cada día', mensual: 'cada mes', 'semanal:0': 'domingos',
+    'semanal:1': 'lunes', 'semanal:2': 'martes', 'semanal:3': 'miércoles',
+    'semanal:4': 'jueves', 'semanal:5': 'viernes', 'semanal:6': 'sábados' };
+
+  // ── utilidades ──────────────────────────────────────────────────────────
   function cabeceras(extra) {
     var h = { apikey: KEY, Authorization: 'Bearer ' + KEY, 'Content-Type': 'application/json' };
     for (var k in extra) h[k] = extra[k];
     return h;
   }
-
-  async function hash(texto) {
-    var buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(texto));
-    return Array.from(new Uint8Array(buf)).map(function (b) {
-      return b.toString(16).padStart(2, '0');
-    }).join('');
+  async function hash(t) {
+    var b = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(t));
+    return Array.from(new Uint8Array(b)).map(function (x) { return x.toString(16).padStart(2, '0'); }).join('');
   }
+  function inicioDia(d) { var x = new Date(d); x.setHours(0, 0, 0, 0); return x; }
+  function clave(d) {
+    return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+  }
+  function mismoDia(a, b) { return inicioDia(a).getTime() === inicioDia(b).getTime(); }
 
-  // --- fechas -------------------------------------------------------------
-  // Todo se compara contra el inicio del dia local, no contra la hora exacta:
-  // una tarea que vence hoy a las 9am no debe verse como "vencida" a las 10.
-  function inicioDelDia(d) {
-    var x = new Date(d);
-    x.setHours(0, 0, 0, 0);
+  // La tira NO es la semana del calendario: es una ventana que empieza ayer
+  // y llega cinco dias adelante. Anclada a la semana natural, un sabado te
+  // deja mirando la semana que termina y el plan de la siguiente queda
+  // invisible — que es justo lo contrario de un planificador.
+  function inicioVentana() {
+    var x = inicioDia(new Date());
+    x.setDate(x.getDate() - 1);
     return x;
   }
 
-  function proximaFecha(desde, recurrencia) {
+  // Para consultas: el domingo de hace una semana, como suelo de datos.
+  function sueloDatos() {
+    var x = inicioDia(new Date());
+    x.setDate(x.getDate() - 9);
+    return x;
+  }
+
+  function proximaFecha(desde, rec) {
     var d = new Date(desde);
-    if (recurrencia === 'diaria') {
-      d.setDate(d.getDate() + 1);
-      return d;
-    }
-    if (recurrencia === 'mensual') {
-      d.setMonth(d.getMonth() + 1);
-      return d;
-    }
-    var m = /^semanal:([0-6])$/.exec(recurrencia || '');
+    if (rec === 'diaria') { d.setDate(d.getDate() + 1); return d; }
+    if (rec === 'mensual') { d.setMonth(d.getMonth() + 1); return d; }
+    var m = /^semanal:([0-6])$/.exec(rec || '');
     if (m) {
-      var objetivo = Number(m[1]);
-      // Siempre avanza al menos un dia, si no una tarea semanal completada
-      // el mismo dia se reprogramaria para hoy otra vez.
       d.setDate(d.getDate() + 1);
-      while (d.getDay() !== objetivo) d.setDate(d.getDate() + 1);
+      while (d.getDay() !== Number(m[1])) d.setDate(d.getDate() + 1);
       return d;
     }
     return null;
   }
 
-  function textoPlazo(iso) {
-    if (!iso) return '';
-    var d = new Date(iso);
-    var hoy = inicioDelDia(new Date());
-    var dias = Math.round((inicioDelDia(d) - hoy) / 86400000);
-    var hora = d.getHours() || d.getMinutes()
-      ? ' · ' + String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0')
-      : '';
-    if (dias === 0) return 'Hoy' + hora;
-    if (dias === 1) return 'Mañana' + hora;
-    if (dias === -1) return 'Ayer' + hora;
-    if (dias < 0) return 'Hace ' + Math.abs(dias) + ' días';
-    if (dias < 7) return 'En ' + dias + ' días' + hora;
-    return d.toLocaleDateString('es-ES', { day: 'numeric', month: 'short' }) + hora;
-  }
-
-  var NOMBRE_REPITE = {
-    diaria: 'cada día', mensual: 'cada mes',
-    'semanal:0': 'cada domingo', 'semanal:1': 'cada lunes', 'semanal:2': 'cada martes',
-    'semanal:3': 'cada miércoles', 'semanal:4': 'cada jueves', 'semanal:5': 'cada viernes',
-    'semanal:6': 'cada sábado'
-  };
-
-  // --- datos --------------------------------------------------------------
-  async function traerTareas() {
+  // ── datos ───────────────────────────────────────────────────────────────
+  // Se traen pendientes y completadas juntas: mirar un día pasado tiene que
+  // mostrar lo que se hizo, no solo lo que quedó colgando.
+  async function traer() {
+    var desde = sueloDatos();
     var url = API + '?select=*&pin_hash=eq.' + pinHash +
-              '&completada_en=is.null&order=vence_en.asc.nullslast,creada_en.asc';
+      '&or=(completada_en.is.null,completada_en.gte.' + desde.toISOString() + ')' +
+      '&order=vence_en.asc.nullslast';
     var r = await fetch(url, { headers: cabeceras() });
-    if (!r.ok) throw new Error('No se pudo cargar: ' + r.status);
+    if (!r.ok) throw new Error('No se pudo cargar (' + r.status + ')');
     return r.json();
   }
-
-  // Las completadas de hoy se muestran aparte. Sin esto, marcar una tarea la
-  // hace desaparecer sin rastro y parece que se borro.
-  async function traerHechasHoy() {
-    var hoy = inicioDelDia(new Date()).toISOString();
-    var url = API + '?select=*&pin_hash=eq.' + pinHash +
-              '&completada_en=gte.' + hoy + '&order=completada_en.desc';
-    var r = await fetch(url, { headers: cabeceras() });
-    if (!r.ok) return [];
-    return r.json();
-  }
-
-  async function descompletar(tarea) {
-    var r = await fetch(API + '?id=eq.' + tarea.id, {
-      method: 'PATCH',
-      headers: cabeceras({ Prefer: 'return=minimal' }),
-      body: JSON.stringify({ completada_en: null })
-    });
-    if (!r.ok) throw new Error('No se pudo deshacer');
-  }
-
   async function crear(filas) {
-    var r = await fetch(API, {
-      method: 'POST',
-      headers: cabeceras({ Prefer: 'return=minimal' }),
-      body: JSON.stringify(filas)
-    });
+    var r = await fetch(API, { method: 'POST', headers: cabeceras({ Prefer: 'return=minimal' }), body: JSON.stringify(filas) });
     if (!r.ok) throw new Error('No se pudo guardar: ' + (await r.text()));
   }
-
-  async function completar(tarea) {
-    var r = await fetch(API + '?id=eq.' + tarea.id, {
-      method: 'PATCH',
-      headers: cabeceras({ Prefer: 'return=minimal' }),
-      body: JSON.stringify({ completada_en: new Date().toISOString() })
+  async function marcar(t, hecha) {
+    var r = await fetch(API + '?id=eq.' + t.id, {
+      method: 'PATCH', headers: cabeceras({ Prefer: 'return=minimal' }),
+      body: JSON.stringify({ completada_en: hecha ? new Date().toISOString() : null })
     });
-    if (!r.ok) throw new Error('No se pudo completar');
-
-    // Una tarea recurrente completada engendra la siguiente. Se calcula desde
-    // su propio plazo, no desde hoy, para que no se corra el dia cada semana.
-    if (tarea.recurrencia) {
-      var base = tarea.vence_en ? new Date(tarea.vence_en) : new Date();
-      var proxima = proximaFecha(base, tarea.recurrencia);
-      if (proxima) {
-        await crear([{
-          pin_hash: pinHash,
-          titulo: tarea.titulo,
-          detalle: tarea.detalle,
-          vence_en: proxima.toISOString(),
-          recurrencia: tarea.recurrencia
-        }]);
-      }
+    if (!r.ok) throw new Error('No se pudo guardar');
+    if (hecha && t.recurrencia) {
+      var p = proximaFecha(t.vence_en || new Date(), t.recurrencia);
+      if (p) await crear([{ pin_hash: pinHash, titulo: t.titulo, detalle: t.detalle,
+                            vence_en: p.toISOString(), recurrencia: t.recurrencia }]);
     }
   }
 
-  // --- semillas -----------------------------------------------------------
-  function proximoDia(diaSemana, hora) {
-    var d = new Date();
-    d.setHours(hora, 0, 0, 0);
-    if (d.getDay() === diaSemana && d > new Date()) return d;
-    do { d.setDate(d.getDate() + 1); } while (d.getDay() !== diaSemana);
-    return d;
+  // ── el reparto: rutina es lo que se repite, el día es lo demás ──────────
+  function deRutina(t) { return !!t.recurrencia; }
+  function delDia(t, d) { return !t.recurrencia && t.vence_en && mismoDia(new Date(t.vence_en), d); }
+
+  // ── pintar ──────────────────────────────────────────────────────────────
+  var vista = document.getElementById('vista');
+  var tira = document.getElementById('tira');
+
+  function el(tag, cls, txt) {
+    var n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (txt != null) n.textContent = txt;
+    return n;
   }
 
+  function pintarTira() {
+    tira.innerHTML = '';
+    tira.hidden = estado.tab !== 'dia';
+    if (estado.tab !== 'dia') return;
+
+    var ini = inicioVentana();
+    var hoy = inicioDia(new Date());
+
+    for (var i = 0; i < 7; i++) {
+      var d = new Date(ini); d.setDate(d.getDate() + i);
+      var suyas = estado.tareas.filter(function (t) { return delDia(t, d); });
+      var pend = suyas.filter(function (t) { return !t.completada_en; });
+
+      var b = el('button');
+      b.type = 'button';
+      if (mismoDia(d, estado.dia)) b.setAttribute('aria-current', 'true');
+      if (mismoDia(d, hoy)) b.classList.add('es-hoy');
+      b.setAttribute('aria-label', NOMBRES[d.getDay()] + ' ' + d.getDate());
+
+      b.appendChild(el('span', 'letra', LETRAS[d.getDay()]));
+      b.appendChild(el('span', 'num', String(d.getDate())));
+
+      var punto = '';
+      if (suyas.length) {
+        if (!pend.length) punto = 'hecho';
+        else if (inicioDia(d) < hoy) punto = 'tarde';
+        else punto = 'pendiente';
+      }
+      b.appendChild(el('span', 'punto ' + punto));
+
+      (function (fecha) {
+        b.addEventListener('click', function () { estado.dia = fecha; render(); });
+      })(d);
+      tira.appendChild(b);
+    }
+  }
+
+  function nodoPaso(t) {
+    var caja = el('div', 'paso' + (t.completada_en ? ' listo' : ''));
+    var fila = el('div', 'paso-fila');
+
+    var m = el('button', 'marca', '✓');
+    m.type = 'button';
+    m.setAttribute('aria-label', (t.completada_en ? 'Deshacer: ' : 'Completar: ') + t.titulo);
+    m.addEventListener('click', async function () {
+      m.disabled = true;
+      try { await marcar(t, !t.completada_en); await cargar(); }
+      catch (e) { m.disabled = false; alert(e.message); }
+    });
+
+    fila.appendChild(m);
+    fila.appendChild(el('div', 'paso-titulo', t.titulo));
+    caja.appendChild(fila);
+
+    if (t.detalle && t.detalle.length > 120) {
+      var ver = el('button', 'ver', 'Ver el guion completo ▾');
+      ver.type = 'button';
+      var g = el('div', 'guion');
+      var pre = el('pre'); pre.textContent = t.detalle; g.appendChild(pre);
+
+      var cp = el('button', 'copiar', 'Copiar');
+      cp.type = 'button';
+      cp.addEventListener('click', function () {
+        navigator.clipboard.writeText(t.detalle).then(function () {
+          cp.textContent = 'Copiado ✓'; cp.classList.add('ok');
+          setTimeout(function () { cp.textContent = 'Copiar'; cp.classList.remove('ok'); }, 1800);
+        }, function () { cp.textContent = 'No se pudo copiar'; });
+      });
+      g.appendChild(cp);
+
+      ver.addEventListener('click', function () {
+        var ab = g.classList.toggle('abierto');
+        ver.textContent = ab ? 'Ocultar guion ▴' : 'Ver el guion completo ▾';
+      });
+      caja.appendChild(ver);
+      caja.appendChild(g);
+    } else if (t.detalle) {
+      caja.appendChild(el('div', 'nota', t.detalle));
+    }
+    return caja;
+  }
+
+  function pintarDia() {
+    var d = estado.dia;
+    var esHoy = mismoDia(d, new Date());
+    var br = estado.brief && estado.brief.dias && estado.brief.dias[clave(d)];
+
+    vista.appendChild(el('p', 'fecha',
+      (esHoy ? 'Hoy · ' : '') + NOMBRES[d.getDay()] + ' ' + d.getDate() + ' de ' + MESES[d.getMonth()]));
+
+    if (br) {
+      vista.appendChild(el('h1', 'titular', br.titular));
+      if (br.porque) vista.appendChild(el('p', 'porque', br.porque));
+    }
+
+    var suyas = estado.tareas.filter(function (t) { return delDia(t, d); });
+    if (suyas.length) {
+      suyas.forEach(function (t) { vista.appendChild(nodoPaso(t)); });
+    } else if (!br) {
+      vista.appendChild(el('p', 'nada', esHoy
+        ? 'Nada planificado para hoy.\nPídele a Claude la semana.'
+        : 'Nada planificado para este día.'));
+    }
+
+    if (br && br.necesito) {
+      var n = el('div', 'necesito');
+      n.appendChild(el('b', null, 'Necesito de ti'));
+      n.appendChild(el('span', null, br.necesito));
+      vista.appendChild(n);
+    }
+
+    if (br && br.cuerpo) {
+      var det = el('details', 'detalle-brief');
+      det.appendChild(el('summary', null, 'El detalle del día'));
+      var p2 = el('pre'); p2.textContent = br.cuerpo;
+      det.appendChild(p2);
+      vista.appendChild(det);
+    }
+  }
+
+  function pintarRutina() {
+    var hoy = inicioDia(new Date());
+    var rut = estado.tareas.filter(deRutina);
+    if (!rut.length) { vista.appendChild(el('p', 'nada', 'No hay tareas fijas.')); return; }
+
+    var pend = rut.filter(function (t) { return !t.completada_en; });
+    var hechas = rut.filter(function (t) { return t.completada_en && mismoDia(new Date(t.completada_en), hoy); });
+
+    vista.appendChild(el('p', 'seccion-tit', 'Lo que se repite'));
+    pend.sort(function (a, b) { return new Date(a.vence_en || 0) - new Date(b.vence_en || 0); });
+    pend.forEach(function (t) {
+      var n = nodoPaso(t);
+      var tarde = t.vence_en && inicioDia(new Date(t.vence_en)) < hoy;
+      n.appendChild(el('div', 'nota', '↻ ' + (REPITE[t.recurrencia] || t.recurrencia) + (tarde ? ' · atrasada' : '')));
+      vista.appendChild(n);
+    });
+
+    if (hechas.length) {
+      vista.appendChild(el('p', 'seccion-tit', 'Hechas hoy · ' + hechas.length));
+      hechas.forEach(function (t) { vista.appendChild(nodoPaso(t)); });
+    }
+  }
+
+  function pintarMas() {
+    vista.appendChild(el('p', 'seccion-tit', 'La semana'));
+
+    var ta = el('textarea', 'campo');
+    ta.placeholder = 'O pega aquí el bloque a mano';
+    var av = el('p', 'aviso');
+    var f = el('div', 'fila2');
+
+    var bCargar = el('button', 'btn claro', 'Cargar publicada');
+    bCargar.type = 'button';
+    bCargar.addEventListener('click', async function () {
+      bCargar.disabled = true; av.className = 'aviso'; av.textContent = 'Buscando…';
+      try {
+        var r = await fetch('semana.json?v=' + Date.now());
+        if (!r.ok) throw new Error('No hay semana publicada (' + r.status + ')');
+        var j = await r.json();
+        ta.value = JSON.stringify(j, null, 1);
+        av.className = 'aviso ok'; av.textContent = j.length + ' pieza(s). Dale a Importar.';
+      } catch (e) { av.className = 'aviso mal'; av.textContent = e.message; }
+      finally { bCargar.disabled = false; }
+    });
+
+    var bImp = el('button', 'btn', 'Importar');
+    bImp.type = 'button';
+    bImp.addEventListener('click', async function () {
+      var crudo = ta.value.trim();
+      if (!crudo) { av.className = 'aviso mal'; av.textContent = 'Carga o pega primero el bloque.'; return; }
+      var datos;
+      try { datos = JSON.parse(crudo); }
+      catch (e) { av.className = 'aviso mal'; av.textContent = 'Bloque no válido. Cópialo entero.'; return; }
+      if (!Array.isArray(datos) || !datos.length) {
+        av.className = 'aviso mal'; av.textContent = 'Debe ser una lista de tareas.'; return;
+      }
+      if (datos.some(function (t) { return !t || !t.titulo || !String(t.titulo).trim(); })) {
+        av.className = 'aviso mal'; av.textContent = 'Hay una tarea sin título.'; return;
+      }
+      bImp.disabled = true; av.className = 'aviso'; av.textContent = 'Importando…';
+      try {
+        // Dedupe por titulo + día: pegar dos veces no debe duplicar la semana.
+        var yaHay = {};
+        estado.tareas.forEach(function (t) {
+          yaHay[t.titulo + '|' + (t.vence_en ? t.vence_en.slice(0, 10) : '')] = 1;
+        });
+        var nuevas = datos.filter(function (t) {
+          var dia = t.vence_en ? new Date(t.vence_en).toISOString().slice(0, 10) : '';
+          return !yaHay[t.titulo + '|' + dia];
+        }).map(function (t) {
+          return { pin_hash: pinHash, titulo: String(t.titulo).trim(), detalle: t.detalle || null,
+                   vence_en: t.vence_en ? new Date(t.vence_en).toISOString() : null,
+                   recurrencia: t.recurrencia || null };
+        });
+        if (!nuevas.length) {
+          av.className = 'aviso ok'; av.textContent = 'Ya estaban todas. No se duplicó nada.';
+        } else {
+          await crear(nuevas);
+          av.className = 'aviso ok'; av.textContent = 'Listo: ' + nuevas.length + ' pieza(s).';
+          ta.value = '';
+          await cargar();
+        }
+      } catch (e) { av.className = 'aviso mal'; av.textContent = e.message; }
+      finally { bImp.disabled = false; }
+    });
+
+    f.appendChild(bCargar); f.appendChild(bImp);
+    vista.appendChild(f);
+    vista.appendChild(ta);
+    vista.appendChild(av);
+
+    vista.appendChild(el('p', 'seccion-tit', 'Anotar algo'));
+    var ti = el('input', 'campo'); ti.placeholder = 'Nueva tarea';
+    var fe = el('input', 'campo'); fe.type = 'datetime-local';
+    var bN = el('button', 'btn claro', 'Añadir');
+    bN.type = 'button';
+    bN.addEventListener('click', async function () {
+      if (!ti.value.trim()) return;
+      bN.disabled = true;
+      try {
+        await crear([{ pin_hash: pinHash, titulo: ti.value.trim(),
+                       vence_en: fe.value ? new Date(fe.value).toISOString() : new Date().toISOString(),
+                       detalle: null, recurrencia: null }]);
+        ti.value = ''; fe.value = '';
+        estado.tab = 'dia'; estado.dia = inicioDia(new Date());
+        await cargar();
+      } catch (e) { alert(e.message); }
+      finally { bN.disabled = false; }
+    });
+    vista.appendChild(ti); vista.appendChild(fe); vista.appendChild(bN);
+  }
+
+  function render() {
+    document.querySelectorAll('.tabs button').forEach(function (b) {
+      b.setAttribute('aria-selected', b.dataset.tab === estado.tab ? 'true' : 'false');
+    });
+    pintarTira();
+    vista.innerHTML = '';
+    if (estado.tab === 'dia') pintarDia();
+    else if (estado.tab === 'rutina') pintarRutina();
+    else pintarMas();
+  }
+
+  async function cargar() {
+    try { estado.tareas = await traer(); }
+    catch (e) { vista.innerHTML = ''; vista.appendChild(el('p', 'nada', e.message)); return; }
+    render();
+  }
+
+  async function cargarBrief() {
+    try {
+      var r = await fetch('briefing.json?v=' + Date.now());
+      if (r.ok) estado.brief = await r.json();
+    } catch (e) { /* sin briefing la app sigue siendo usable */ }
+  }
+
+  // ── semillas ────────────────────────────────────────────────────────────
+  function proximoDia(dw, h) {
+    var d = new Date(); d.setHours(h, 0, 0, 0);
+    if (d.getDay() === dw && d > new Date()) return d;
+    do { d.setDate(d.getDate() + 1); } while (d.getDay() !== dw);
+    return d;
+  }
   function semillas() {
     var hoy9 = new Date(); hoy9.setHours(9, 0, 0, 0);
     if (hoy9 < new Date()) hoy9.setDate(hoy9.getDate() + 1);
-    var finDeMes = new Date(); finDeMes.setMonth(finDeMes.getMonth() + 1, 1); finDeMes.setHours(10, 0, 0, 0);
-
+    var mes = new Date(); mes.setMonth(mes.getMonth() + 1, 1); mes.setHours(10, 0, 0, 0);
     return [
-      ['Tanda de historias de la semana', 'Pre-armar 18 historias: 6 de valor, 6 CTA, 6 ganchos.', proximoDia(0, 10), 'semanal:0'],
-      ['Correr radar.py precios y nuevos', 'Datos frescos para el Radar y para Nuevos en el Hub.', proximoDia(0, 9), 'semanal:0'],
+      ['Tanda de historias de la semana', 'Pre-armar 18: 6 de valor, 6 CTA, 6 ganchos.', proximoDia(0, 10), 'semanal:0'],
+      ['Correr radar.py precios y nuevos', 'Datos frescos para el Radar y Nuevos en el Hub.', proximoDia(0, 9), 'semanal:0'],
       ['Grabar los 2 reels de La Escuela', 'Lunes y miércoles, en una sola sesión.', proximoDia(0, 11), 'semanal:0'],
-      ['Grabar reels del viernes y sábado', 'Ranking y Prueba Real — dependen de los datos de la semana.', proximoDia(4, 10), 'semanal:4'],
-      ['Responder comentarios del día', 'En menos de 1 hora vale el doble. Pasadas 24h, vale cero.', hoy9, 'diaria'],
-      ['Publicar la pieza del día', 'Mira el calendario en PLAN.md.', hoy9, 'diaria'],
-      ['Revisar las 4 métricas', 'Guardados, compartidos, comentarios con palabra clave y perfiles nuevos en RomaHub.', proximoDia(5, 18), 'semanal:5'],
-      ['Podar la sección con menos guardados', 'Cambiarla o eliminarla. Sin cariño.', finDeMes, 'mensual']
+      ['Grabar reels del viernes y sábado', 'Dependen de los datos de la semana.', proximoDia(4, 10), 'semanal:4'],
+      ['Responder comentarios del día', 'En menos de 1 hora vale el doble.', hoy9, 'diaria'],
+      ['Revisar las 4 métricas', 'Guardados, compartidos, comentarios y perfiles nuevos.', proximoDia(5, 18), 'semanal:5'],
+      ['Podar la sección con menos guardados', 'Cambiarla o eliminarla. Sin cariño.', mes, 'mensual']
     ].map(function (t) {
       return { pin_hash: pinHash, titulo: t[0], detalle: t[1], vence_en: t[2].toISOString(), recurrencia: t[3] };
     });
   }
 
-  // --- pintar -------------------------------------------------------------
-  var lista = document.getElementById('lista');
+  // ── arranque ────────────────────────────────────────────────────────────
+  var pPin = document.getElementById('p-pin'), pApp = document.getElementById('p-app');
 
-  function agrupar(tareas) {
-    var hoy = inicioDelDia(new Date());
-    var finSemana = new Date(hoy); finSemana.setDate(finSemana.getDate() + 7);
-    var g = { vencidas: [], hoy: [], semana: [], despues: [], sinPlazo: [] };
-    tareas.forEach(function (t) {
-      if (!t.vence_en) return g.sinPlazo.push(t);
-      var d = inicioDelDia(new Date(t.vence_en));
-      if (d < hoy) g.vencidas.push(t);
-      else if (d.getTime() === hoy.getTime()) g.hoy.push(t);
-      else if (d < finSemana) g.semana.push(t);
-      else g.despues.push(t);
-    });
-    return g;
+  async function abrir() {
+    pPin.hidden = true; pApp.hidden = false;
+    await cargarBrief();
+    await cargar();
   }
 
-  function nodoTarea(t) {
-    var li = document.createElement('div');
-    li.className = 'tarea';
-
-    var btn = document.createElement('button');
-    btn.className = 'check';
-    btn.type = 'button';
-    btn.textContent = '✓';
-    btn.setAttribute('aria-label', 'Completar: ' + t.titulo);
-    btn.addEventListener('click', async function () {
-      btn.disabled = true;
-      try { await completar(t); await pintar(); }
-      catch (e) { btn.disabled = false; alert(e.message); }
-    });
-
-    var cuerpo = document.createElement('div');
-    cuerpo.className = 'cuerpo';
-
-    var titulo = document.createElement('div');
-    titulo.className = 'titulo';
-    titulo.textContent = t.titulo;
-    cuerpo.appendChild(titulo);
-
-    // El contenido corto se lee de un vistazo; el largo (un guion de reel,
-    // un carrusel entero) se pliega, o la lista se vuelve ilegible.
-    if (t.detalle) {
-      var LARGO = 160;
-      if (t.detalle.length <= LARGO) {
-        var det = document.createElement('div');
-        det.className = 'detalle';
-        det.textContent = t.detalle;
-        cuerpo.appendChild(det);
-      } else {
-        var toggle = document.createElement('button');
-        toggle.className = 'ver-contenido';
-        toggle.type = 'button';
-        toggle.textContent = 'Ver contenido ▾';
-
-        var caja = document.createElement('div');
-        caja.className = 'contenido';
-        var pre = document.createElement('pre');
-        pre.textContent = t.detalle;
-        caja.appendChild(pre);
-
-        // Sin este boton el contenido no sirve: hay que poder pegarlo en
-        // CapCut o en Instagram sin seleccionar a mano en el movil.
-        var copiar = document.createElement('button');
-        copiar.className = 'copiar';
-        copiar.type = 'button';
-        copiar.textContent = 'Copiar';
-        copiar.addEventListener('click', function () {
-          navigator.clipboard.writeText(t.detalle).then(function () {
-            copiar.textContent = 'Copiado ✓';
-            copiar.classList.add('hecho');
-            setTimeout(function () {
-              copiar.textContent = 'Copiar';
-              copiar.classList.remove('hecho');
-            }, 1800);
-          }, function () {
-            copiar.textContent = 'No se pudo copiar';
-          });
-        });
-        caja.appendChild(copiar);
-
-        toggle.addEventListener('click', function () {
-          var abierto = caja.classList.toggle('abierto');
-          toggle.textContent = abierto ? 'Ocultar contenido ▴' : 'Ver contenido ▾';
-        });
-
-        cuerpo.appendChild(toggle);
-        cuerpo.appendChild(caja);
-      }
-    }
-
-    var meta = document.createElement('div');
-    meta.className = 'meta';
-    if (t.vence_en) {
-      var plazo = document.createElement('span');
-      plazo.textContent = textoPlazo(t.vence_en);
-      meta.appendChild(plazo);
-    }
-    if (t.recurrencia) {
-      var rep = document.createElement('span');
-      rep.className = 'repite';
-      rep.textContent = '↻ ' + (NOMBRE_REPITE[t.recurrencia] || t.recurrencia);
-      meta.appendChild(rep);
-    }
-    if (meta.children.length) cuerpo.appendChild(meta);
-
-    li.appendChild(btn);
-    li.appendChild(cuerpo);
-    return li;
-  }
-
-  function nodoHecha(t) {
-    var li = document.createElement('div');
-    li.className = 'tarea';
-
-    var marca = document.createElement('div');
-    marca.className = 'check';
-    marca.textContent = '✓';
-    marca.setAttribute('aria-label', 'Completada');
-
-    var cuerpo = document.createElement('div');
-    cuerpo.className = 'cuerpo';
-
-    var titulo = document.createElement('div');
-    titulo.className = 'titulo';
-    titulo.textContent = t.titulo;
-    cuerpo.appendChild(titulo);
-
-    // Deshacer solo para las que no se repiten. En una recurrente, completarla
-    // ya creo la siguiente: devolverla a pendiente dejaria dos vivas a la vez.
-    if (!t.recurrencia) {
-      var undo = document.createElement('button');
-      undo.className = 'deshacer';
-      undo.type = 'button';
-      undo.textContent = 'Deshacer';
-      undo.addEventListener('click', async function () {
-        undo.disabled = true;
-        try { await descompletar(t); await pintar(); }
-        catch (e) { undo.disabled = false; alert(e.message); }
-      });
-      cuerpo.appendChild(undo);
-    } else {
-      var nota = document.createElement('div');
-      nota.className = 'meta';
-      nota.textContent = '↻ la siguiente ya está en la lista';
-      cuerpo.appendChild(nota);
-    }
-
-    li.appendChild(marca);
-    li.appendChild(cuerpo);
-    return li;
-  }
-
-  function bloque(clase, titulo, tareas, hacerNodo) {
-    if (!tareas.length) return null;
-    var sec = document.createElement('section');
-    sec.className = 'grupo ' + clase;
-    var h = document.createElement('h2');
-    h.textContent = titulo + ' · ' + tareas.length;
-    sec.appendChild(h);
-    var fabrica = hacerNodo || nodoTarea;
-    tareas.forEach(function (t) { sec.appendChild(fabrica(t)); });
-    return sec;
-  }
-
-  async function pintar() {
-    var tareas, hechas;
-    try {
-      tareas = await traerTareas();
-      hechas = await traerHechasHoy();
-    } catch (e) {
-      lista.innerHTML = '';
-      lista.appendChild(Object.assign(document.createElement('p'), { className: 'vacio', textContent: e.message }));
-      return;
-    }
-
-    lista.innerHTML = '';
-    if (!tareas.length && !hechas.length) {
-      lista.appendChild(Object.assign(document.createElement('p'), {
-        className: 'vacio', textContent: 'Nada pendiente. Disfrútalo.'
-      }));
-      return;
-    }
-
-    var g = agrupar(tareas);
-    [
-      bloque('vencidas', 'Vencidas', g.vencidas),
-      bloque('', 'Hoy', g.hoy),
-      bloque('', 'Esta semana', g.semana),
-      bloque('', 'Más adelante', g.despues),
-      bloque('', 'Sin plazo', g.sinPlazo),
-      bloque('hechas', 'Hechas hoy', hechas, nodoHecha)
-    ].forEach(function (b) { if (b) lista.appendChild(b); });
-
-    if (!tareas.length) {
-      var p = Object.assign(document.createElement('p'), {
-        className: 'vacio', textContent: 'No queda nada pendiente. Buen día de trabajo.'
-      });
-      lista.insertBefore(p, lista.firstChild);
-    }
-  }
-
-  // --- arranque -----------------------------------------------------------
-  var pantallaPin = document.getElementById('pantalla-pin');
-  var pantallaApp = document.getElementById('pantalla-app');
-
-  // --- el briefing del dia -----------------------------------------------
-  // Se lee de briefing.json, que vive en el repo. Si no hay entrada para hoy,
-  // la tarjeta no se pinta: mejor nada que un briefing de otro dia.
-  function claveHoy() {
-    var d = new Date();
-    return d.getFullYear() + '-' +
-           String(d.getMonth() + 1).padStart(2, '0') + '-' +
-           String(d.getDate()).padStart(2, '0');
-  }
-
-  async function pintarBrief() {
-    var caja = document.getElementById('brief');
-    caja.innerHTML = '';
-
-    var datos;
-    try {
-      var r = await fetch('briefing.json?v=' + Date.now());
-      if (!r.ok) return;
-      datos = await r.json();
-    } catch (e) { return; }
-
-    var hoy = claveHoy();
-    var dia = datos.dias && datos.dias[hoy];
-    if (!dia) return;
-
-    var card = document.createElement('section');
-    card.className = 'brief';
-
-    var kicker = document.createElement('p');
-    kicker.className = 'kicker';
-    kicker.textContent = 'Semana del ' + (datos.semana || '');
-    card.appendChild(kicker);
-
-    var h2 = document.createElement('h2');
-    h2.textContent = dia.titular;
-    card.appendChild(h2);
-
-    var porque = document.createElement('p');
-    porque.className = 'porque';
-    porque.textContent = dia.porque;
-    card.appendChild(porque);
-
-    if (dia.necesito) {
-      var nec = document.createElement('div');
-      nec.className = 'necesito';
-      var et = document.createElement('b');
-      et.textContent = 'Necesito de ti';
-      nec.appendChild(et);
-      nec.appendChild(document.createTextNode(dia.necesito));
-      card.appendChild(nec);
-    }
-
-    var boton = document.createElement('button');
-    boton.className = 'mas-brief';
-    boton.type = 'button';
-    boton.textContent = 'Ver el detalle y la semana ▾';
-
-    var det = document.createElement('div');
-    det.className = 'detalle-brief';
-
-    if (dia.cuerpo) {
-      var pre = document.createElement('pre');
-      pre.textContent = dia.cuerpo;
-      det.appendChild(pre);
-    }
-
-    if (datos.resumen && datos.resumen.length) {
-      var tabla = document.createElement('table');
-      var thead = document.createElement('tr');
-      ['Día', 'Pieza', 'Vende'].forEach(function (t) {
-        var th = document.createElement('th');
-        th.textContent = t;
-        thead.appendChild(th);
-      });
-      tabla.appendChild(thead);
-
-      datos.resumen.forEach(function (f) {
-        var tr = document.createElement('tr');
-        // La fila de hoy se marca, para ubicarse de un vistazo.
-        if (dia.titular && f.dia && hoy.slice(8) === String(new Date().getDate()).padStart(2, '0')
-            && f.dia.indexOf(String(new Date().getDate())) !== -1) {
-          tr.className = 'hoy-fila';
-        }
-        [f.dia, f.pieza, f.vende].forEach(function (v) {
-          var td = document.createElement('td');
-          td.textContent = v;
-          tr.appendChild(td);
-        });
-        tabla.appendChild(tr);
-      });
-      det.appendChild(tabla);
-
-      if (datos.reparto) {
-        var rep = document.createElement('p');
-        rep.className = 'porque';
-        rep.style.marginTop = '10px';
-        rep.style.fontSize = '12px';
-        rep.textContent = datos.reparto;
-        det.appendChild(rep);
-      }
-    }
-
-    boton.addEventListener('click', function () {
-      var abierto = det.classList.toggle('abierto');
-      boton.textContent = abierto ? 'Ocultar ▴' : 'Ver el detalle y la semana ▾';
-    });
-
-    card.appendChild(boton);
-    card.appendChild(det);
-    caja.appendChild(card);
-  }
-
-  async function entrar() {
-    pantallaPin.hidden = true;
-    pantallaApp.hidden = false;
-    pintarBrief();
-    await pintar();
-  }
-
-  // Entrar es la unica accion que INSERTA al pulsarla. Sin bloquear el boton,
-  // pulsar dos veces (o dar Enter y ademas clic) lanza dos comprobaciones que
-  // ven la lista vacia a la vez y siembran las tareas por duplicado.
   var entrando = false;
   document.getElementById('entrar').addEventListener('click', async function () {
     if (entrando) return;
     var boton = this;
-    var valor = document.getElementById('pin').value.trim();
+    var v = document.getElementById('pin').value.trim();
     var err = document.getElementById('pin-error');
-    if (valor.length < 4) { err.textContent = 'Usa al menos 4 caracteres.'; return; }
-
-    entrando = true;
-    boton.disabled = true;
-    err.textContent = '';
-    pinHash = await hash(valor);
+    if (v.length < 4) { err.textContent = 'Usa al menos 4 caracteres.'; return; }
+    entrando = true; boton.disabled = true; err.textContent = '';
+    pinHash = await hash(v);
     localStorage.setItem('romatareas-pin', pinHash);
-
-    // Primera vez con este PIN: cargar las tareas del plan de contenido.
-    // Se mira TODA la tabla de ese pin, no solo lo pendiente: si ya completaste
-    // las semillas, no deben volver a aparecer.
     try {
-      var yaHubo = await fetch(API + '?select=id&pin_hash=eq.' + pinHash + '&limit=1', { headers: cabeceras() })
+      var hubo = await fetch(API + '?select=id&pin_hash=eq.' + pinHash + '&limit=1', { headers: cabeceras() })
         .then(function (r) { return r.json(); });
-      if (!yaHubo.length) await crear(semillas());
+      if (!hubo.length) await crear(semillas());
     } catch (e) { /* si falla la semilla, la app sigue siendo usable */ }
-
-    entrando = false;
-    boton.disabled = false;
-    entrar();
+    entrando = false; boton.disabled = false;
+    abrir();
   });
-
   document.getElementById('pin').addEventListener('keydown', function (e) {
     if (e.key === 'Enter') document.getElementById('entrar').click();
   });
-
   document.getElementById('salir').addEventListener('click', function () {
-    localStorage.removeItem('romatareas-pin');
-    location.reload();
+    localStorage.removeItem('romatareas-pin'); location.reload();
+  });
+  document.querySelectorAll('.tabs button').forEach(function (b) {
+    b.addEventListener('click', function () {
+      estado.tab = b.dataset.tab;
+      if (estado.tab === 'dia') estado.dia = inicioDia(new Date());
+      render();
+    });
   });
 
-  document.getElementById('mas').addEventListener('click', function () {
-    document.getElementById('extra').classList.toggle('abierto');
-  });
-
-  document.getElementById('form-nueva').addEventListener('submit', async function (e) {
-    e.preventDefault();
-    var titulo = document.getElementById('t-titulo');
-    var detalle = document.getElementById('t-detalle');
-    var vence = document.getElementById('t-vence');
-    var repite = document.getElementById('t-repite');
-    if (!titulo.value.trim()) return;
-
-    var fila = {
-      pin_hash: pinHash,
-      titulo: titulo.value.trim(),
-      detalle: detalle.value.trim() || null,
-      vence_en: vence.value ? new Date(vence.value).toISOString() : null,
-      recurrencia: repite.value || null
-    };
-    try {
-      await crear([fila]);
-      titulo.value = ''; detalle.value = ''; vence.value = ''; repite.value = '';
-      document.getElementById('extra').classList.remove('abierto');
-      await pintar();
-    } catch (err) { alert(err.message); }
-  });
-
-  // --- importar la semana -------------------------------------------------
-  // Trae el bloque de la semana que ya vive en el repo, para no tener que
-  // copiar 14.000 caracteres a mano en el movil.
-  document.getElementById('imp-cargar').addEventListener('click', async function () {
-    var aviso = document.getElementById('imp-aviso');
-    var boton = this;
-    boton.disabled = true;
-    aviso.className = 'aviso';
-    aviso.textContent = 'Buscando…';
-    try {
-      var r = await fetch('semana.json?v=' + Date.now());
-      if (!r.ok) throw new Error('No hay semana publicada todavía (' + r.status + ')');
-      var datos = await r.json();
-      document.getElementById('imp-texto').value = JSON.stringify(datos, null, 1);
-      aviso.className = 'aviso ok';
-      aviso.textContent = datos.length + ' pieza(s) cargadas. Dale a Importar.';
-    } catch (e) {
-      aviso.className = 'aviso mal';
-      aviso.textContent = e.message;
-    } finally {
-      boton.disabled = false;
-    }
-  });
-
-  document.getElementById('imp-boton').addEventListener('click', async function () {
-    var texto = document.getElementById('imp-texto');
-    var aviso = document.getElementById('imp-aviso');
-    var boton = this;
-
-    function decir(msg, clase) {
-      aviso.textContent = msg;
-      aviso.className = 'aviso ' + (clase || '');
-    }
-
-    var crudo = texto.value.trim();
-    if (!crudo) return decir('Pega primero el bloque.', 'mal');
-
-    var datos;
-    try {
-      datos = JSON.parse(crudo);
-    } catch (e) {
-      return decir('Eso no es un bloque válido. Cópialo entero, desde el primer [ hasta el último ].', 'mal');
-    }
-    if (!Array.isArray(datos) || !datos.length) {
-      return decir('El bloque debe ser una lista de tareas.', 'mal');
-    }
-    var invalida = datos.find(function (t) { return !t || typeof t.titulo !== 'string' || !t.titulo.trim(); });
-    if (invalida) return decir('Hay una tarea sin título. Revisa el bloque.', 'mal');
-
-    boton.disabled = true;
-    decir('Importando…');
-    try {
-      // Dedupe por titulo + dia: si pegas el mismo bloque dos veces no acabas
-      // con la semana duplicada, que es el error facil de cometer un domingo.
-      var existentes = await traerTareas();
-      var yaHay = new Set(existentes.map(function (t) {
-        return t.titulo + '|' + (t.vence_en ? t.vence_en.slice(0, 10) : '');
-      }));
-
-      var nuevas = datos.filter(function (t) {
-        var dia = t.vence_en ? new Date(t.vence_en).toISOString().slice(0, 10) : '';
-        return !yaHay.has(t.titulo + '|' + dia);
-      }).map(function (t) {
-        return {
-          pin_hash: pinHash,
-          titulo: t.titulo.trim(),
-          detalle: t.detalle || null,
-          vence_en: t.vence_en ? new Date(t.vence_en).toISOString() : null,
-          recurrencia: t.recurrencia || null
-        };
-      });
-
-      var repetidas = datos.length - nuevas.length;
-      if (!nuevas.length) {
-        decir('Ya estaban todas. No se duplicó nada.', 'ok');
-      } else {
-        await crear(nuevas);
-        decir('Listo: ' + nuevas.length + ' tarea(s)' +
-              (repetidas ? ' · ' + repetidas + ' ya estaban' : ''), 'ok');
-        texto.value = '';
-        await pintar();
-      }
-    } catch (e) {
-      decir(e.message, 'mal');
-    } finally {
-      boton.disabled = false;
-    }
-  });
-
-  if (pinHash) entrar();
+  if (pinHash) abrir();
 })();
 </script>
 </body>
